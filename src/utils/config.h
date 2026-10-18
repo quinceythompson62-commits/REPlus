@@ -202,6 +202,11 @@ struct Config
 	// first thing to ask for when someone reports "setting X does nothing".
 	bool  shakeDebugLog = false;
 
+	// Seconds over which a marker's shake crossfades into the next marker's,
+	// ending exactly on the next marker. 0 = the old hard switch at the
+	// marker. A marker can override it with its own Shake Blend row.
+	float shakeBlend = 1.0f;
+
 	// The same idea for the curve: log which path each frame took, once a
 	// second. Says whether a mounted or look-at segment was splined and, when it
 	// was not, exactly which condition declined it - the two look identical from
@@ -1372,6 +1377,12 @@ struct Config
 		shake.amplitude  = getFloat("ShakeAmplitude",  shake.amplitude);
 		shake.frequency  = getFloat("ShakeFrequency",  shake.frequency);
 		shake.variation  = getFloat("ShakeVariation",     shake.variation);
+		shake.style      = GetPrivateProfileIntA("RockstarEditorPlus", "ShakeStyle",
+			shake.style, ini.c_str());
+		if (shake.style < 0 || shake.style >= shake::kStyleCount) shake.style = 0;
+		shakeBlend       = getFloat("ShakeBlend", shakeBlend);
+		if (shakeBlend < 0.0f)  shakeBlend = 0.0f;
+		if (shakeBlend > 10.0f) shakeBlend = 10.0f;
 
 		shakeDebugLog  = GetPrivateProfileIntA("RockstarEditorPlus",
 			"ShakeDebugLog", shakeDebugLog ? 1 : 0, ini.c_str()) != 0;

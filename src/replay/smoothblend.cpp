@@ -1470,49 +1470,72 @@ namespace smoothblend
 		}
 	}
 
-	static void applyShake(void* self, void* marker)
+	// Global shake parameters with one marker's overrides on top.
+	static shake::Params shakeParamsFor(const rsettings::MarkerSettings& ms)
 	{
-		// Our shake runs only on markers whose Shake row is set to the
-		// "Rockstar Editor+" preset. Without this gate the sway/jitter values
-		// would apply on top of whatever the game's own shake was already
-		// doing - two shakes at once - and there would be no way to turn ours
-		// off from the menu.
-		if (!marker) return;
-		if (!rsettings::get(rmarker::timeMs(marker)).ourShake) return;
-
-		// Start from the global parameters, then let the marker override each
-		// term it actually sets.
+		using namespace rsettings;
 		shake::Params p = Config::get().shake;
 
-		{
-			using namespace rsettings;
-			const MarkerSettings ms = rsettings::get(rmarker::timeMs(marker));
-			if (ms.has(P_SWAY_POS))  p.sway.posAmp   = ms.v[P_SWAY_POS];
-			if (ms.has(P_SWAY_ROT))  p.sway.rotAmp   = ms.v[P_SWAY_ROT];
-			if (ms.has(P_SWAY_FREQ)) p.sway.freq     = ms.v[P_SWAY_FREQ];
-			if (ms.has(P_JIT_POS))   p.jitter.posAmp = ms.v[P_JIT_POS];
-			if (ms.has(P_JIT_ROT))   p.jitter.rotAmp = ms.v[P_JIT_ROT];
-			if (ms.has(P_JIT_FREQ))  p.jitter.freq   = ms.v[P_JIT_FREQ];
-			if (ms.has(P_OCTAVES))   p.octaves       = (int)ms.v[P_OCTAVES];
-			if (ms.has(P_SEED))      p.seed          = (int)ms.v[P_SEED];
-			if (ms.has(P_AX_LAT))    p.axisPos[0]    = ms.v[P_AX_LAT];
-			if (ms.has(P_AX_FWD))    p.axisPos[1]    = ms.v[P_AX_FWD];
-			if (ms.has(P_AX_VERT))   p.axisPos[2]    = ms.v[P_AX_VERT];
-			if (ms.has(P_AX_PITCH))  p.axisRot[0]    = ms.v[P_AX_PITCH];
-			if (ms.has(P_AX_ROLL))   p.axisRot[1]    = ms.v[P_AX_ROLL];
-			if (ms.has(P_AX_YAW))    p.axisRot[2]    = ms.v[P_AX_YAW];
+		if (ms.has(P_SWAY_POS))  p.sway.posAmp   = ms.v[P_SWAY_POS];
+		if (ms.has(P_SWAY_ROT))  p.sway.rotAmp   = ms.v[P_SWAY_ROT];
+		if (ms.has(P_SWAY_FREQ)) p.sway.freq     = ms.v[P_SWAY_FREQ];
+		if (ms.has(P_JIT_POS))   p.jitter.posAmp = ms.v[P_JIT_POS];
+		if (ms.has(P_JIT_ROT))   p.jitter.rotAmp = ms.v[P_JIT_ROT];
+		if (ms.has(P_JIT_FREQ))  p.jitter.freq   = ms.v[P_JIT_FREQ];
+		if (ms.has(P_OCTAVES))   p.octaves       = (int)ms.v[P_OCTAVES];
+		if (ms.has(P_SEED))      p.seed          = (int)ms.v[P_SEED];
+		if (ms.has(P_AX_LAT))    p.axisPos[0]    = ms.v[P_AX_LAT];
+		if (ms.has(P_AX_FWD))    p.axisPos[1]    = ms.v[P_AX_FWD];
+		if (ms.has(P_AX_VERT))   p.axisPos[2]    = ms.v[P_AX_VERT];
+		if (ms.has(P_AX_PITCH))  p.axisRot[0]    = ms.v[P_AX_PITCH];
+		if (ms.has(P_AX_ROLL))   p.axisRot[1]    = ms.v[P_AX_ROLL];
+		if (ms.has(P_AX_YAW))    p.axisRot[2]    = ms.v[P_AX_YAW];
 
-			if (ms.has(P_SIMPLE))     p.simpleMode    = ms.v[P_SIMPLE]     > 0.5f;
-			if (ms.has(P_INTENSITY))  p.amplitude     = ms.v[P_INTENSITY];
-			if (ms.has(P_FREQ_MUL))   p.frequency     = ms.v[P_FREQ_MUL];
-			if (ms.has(P_SPEED_AMP))  p.speedAmp      = ms.v[P_SPEED_AMP];
-			if (ms.has(P_SPEED_FREQ)) p.speedFreq     = ms.v[P_SPEED_FREQ];
-			if (ms.has(P_STOP_STILL)) p.stopWhenStill = ms.v[P_STOP_STILL] > 0.5f;
-			if (ms.has(P_VARIATION))  p.variation     = ms.v[P_VARIATION];
-		}
+		if (ms.has(P_SIMPLE))      p.simpleMode    = ms.v[P_SIMPLE]     > 0.5f;
+		if (ms.has(P_INTENSITY))   p.amplitude     = ms.v[P_INTENSITY];
+		if (ms.has(P_FREQ_MUL))    p.frequency     = ms.v[P_FREQ_MUL];
+		if (ms.has(P_SPEED_AMP))   p.speedAmp      = ms.v[P_SPEED_AMP];
+		if (ms.has(P_SPEED_FREQ))  p.speedFreq     = ms.v[P_SPEED_FREQ];
+		if (ms.has(P_STOP_STILL))  p.stopWhenStill = ms.v[P_STOP_STILL] > 0.5f;
+		if (ms.has(P_VARIATION))   p.variation     = ms.v[P_VARIATION];
+		if (ms.has(P_SHAKE_STYLE)) p.style         = (int)(ms.v[P_SHAKE_STYLE] + 0.5f);
+		if (p.style < 0 || p.style >= shake::kStyleCount) p.style = 0;
+		return p;
+	}
 
-		if (!p.active()) return;
+	// Two shakes with the same rates and seed are the same signal at different
+	// sizes, so a plain crossfade between them is exact. Anything else is two
+	// unrelated signals, and a plain crossfade would dip to ~70% in the middle.
+	static bool sameShakeTexture(const shake::Params& a, const shake::Params& b)
+	{
+		if (a.simpleMode != b.simpleMode || a.seed != b.seed ||
+		    a.octaves != b.octaves || a.speedFreq != b.speedFreq) return false;
+		if (a.simpleMode)
+			return a.style == b.style && a.frequency == b.frequency;
+		return a.sway.freq == b.sway.freq && a.jitter.freq == b.jitter.freq;
+	}
 
+	// -------------------------------------------------------------------------
+	// Shake v2.
+	//
+	//  * The marker's shake crossfades into the NEXT marker's over the last
+	//    Shake Blend seconds of the segment, so changing style or strength
+	//    between markers no longer snaps at the marker. A marker without our
+	//    shake counts as "no shake", so shake now fades in and out too.
+	//  * Impact: a jolt that starts at a marker and rings out. The previous
+	//    marker's impact is evaluated as well, so a jolt does not get cut off
+	//    when the next marker comes up quickly.
+	//
+	// Everything is still a pure function of replay time.
+	// -------------------------------------------------------------------------
+	static void applyShake(void* self, void* storage, int currIdx)
+	{
+		using namespace rsettings;
+		if (!storage) return;
+		void* marker = rstorage::tryGetMarker(storage, currIdx);
+		if (!marker) return;
+
+		const Config& cfg = Config::get();
 		const float now = *(float*)game::addr_g_ReplayTimeMs;
 
 		// NEGATIVE means "not known this tick", which is not the same as zero.
@@ -1521,8 +1544,101 @@ namespace smoothblend
 		// says nothing about whether the camera is moving.
 		const float speed = s_pathSpeedValid ? s_pathSpeed : -1.0f;
 
-		float dp[3], dr[3];
-		shake::evaluate(p, now, speed, dp, dr);
+		const float tA = rmarker::timeMs(marker);
+		const MarkerSettings msA = rsettings::get(tA);
+
+		// --- the next marker, and how far into the blend we are ------------
+		void* next = nullptr;
+		float tB = 0.0f;
+		{
+			const int nextIdx = game::nextMarkerIndex(currIdx);
+			if (nextIdx >= 0 && nextIdx != currIdx)
+			{
+				next = rstorage::tryGetMarker(storage, nextIdx);
+				if (next)
+				{
+					tB = rmarker::timeMs(next);
+					if (!(tB > tA)) next = nullptr;
+				}
+			}
+		}
+		const MarkerSettings msB = next ? rsettings::get(tB) : MarkerSettings{};
+
+		const float blendSec = msA.has(P_SHAKE_BLEND) ? msA.v[P_SHAKE_BLEND] : cfg.shakeBlend;
+		float w = 0.0f;
+		if (next && blendSec > 0.0f)
+		{
+			float L = blendSec * 1000.0f;
+			if (L > tB - tA) L = tB - tA;
+			if (L > 1.0f && now > tB - L)
+			{
+				float x = (now - (tB - L)) / L;
+				if (x > 1.0f) x = 1.0f;
+				w = x * x * (3.0f - 2.0f * x);
+			}
+		}
+
+		const bool aOn = msA.ourShake;
+		const bool bOn = next && msB.ourShake && w > 0.0f;
+
+		shake::Params p = shakeParamsFor(msA);   // also used for the debug log
+
+		float dp[3] = { 0, 0, 0 }, dr[3] = { 0, 0, 0 };
+		float ap[3] = { 0, 0, 0 }, ar[3] = { 0, 0, 0 };
+		float bp[3] = { 0, 0, 0 }, br[3] = { 0, 0, 0 };
+		bool any = false;
+
+		if (aOn && p.active()) { shake::evaluate(p, now, speed, ap, ar); any = true; }
+
+		shake::Params pB;
+		if (bOn)
+		{
+			pB = shakeParamsFor(msB);
+			if (pB.active()) { shake::evaluate(pB, now, speed, bp, br); any = true; }
+		}
+
+		if (any)
+		{
+			float wa = aOn ? 1.0f - w : 0.0f;
+			float wb = bOn ? w : 0.0f;
+			// Fading A out with nothing coming in: wb is 0 and wa = 1 - w, a
+			// plain fade. Fading B in from nothing: the mirror image.
+			if (aOn && bOn && p.active() && pB.active() && !sameShakeTexture(p, pB))
+			{
+				const float n = 1.0f / sqrtf(wa * wa + wb * wb);
+				wa *= n; wb *= n;
+			}
+			for (int i = 0; i < 3; ++i)
+			{
+				dp[i] = ap[i] * wa + bp[i] * wb;
+				dr[i] = ar[i] * wa + br[i] * wb;
+			}
+		}
+
+		// --- impacts ---------------------------------------------------------
+		if (msA.has(P_IMPACT) && msA.v[P_IMPACT] > 0.0f)
+		{
+			shake::addImpact(msA.v[P_IMPACT], p.seed + (int)tA, now - tA, dp, dr);
+			any = true;
+		}
+		{
+			const int prevIdx = game::prevMarkerIndex(currIdx);
+			void* prev = (prevIdx >= 0 && prevIdx != currIdx)
+				? rstorage::tryGetMarker(storage, prevIdx) : nullptr;
+			if (prev)
+			{
+				const float tP = rmarker::timeMs(prev);
+				const MarkerSettings msP = rsettings::get(tP);
+				if (tP < tA && msP.has(P_IMPACT) && msP.v[P_IMPACT] > 0.0f)
+				{
+					shake::addImpact(msP.v[P_IMPACT], p.seed + (int)tP, now - tP, dp, dr);
+					any = true;
+				}
+			}
+		}
+
+		if (!any) return;
+
 
 		auto* b = (uint8_t*)self;
 		float* ax = (float*)(b + rdirector::OFF_FrameMatrixA); // right
@@ -1557,9 +1673,10 @@ namespace smoothblend
 
 					logger::write("info",
 						"shake: t=%.0f rot=%.3f/%.3f/%.3f deg pos=%.4f/%.4f/%.4f "
-						"| mode=%s axisRot=%.2f/%.2f/%.2f swayRot=%.3f jitRot=%.3f",
+						"| mode=%s style=%s blendW=%.2f axisRot=%.2f/%.2f/%.2f swayRot=%.3f jitRot=%.3f",
 						now, dr[0], dr[1], dr[2], dp[0], dp[1], dp[2],
 						shown.simpleMode ? "simple" : "complex",
+						shake::style(shown.style).name, w,
 						shown.axisRot[0], shown.axisRot[1], shown.axisRot[2],
 						shown.sway.rotAmp, shown.jitter.rotAmp);
 				}
@@ -1718,10 +1835,7 @@ namespace smoothblend
 			// Shake runs even when the spline declined this marker - it is not
 			// tied to blending. Look up the current marker for its overrides.
 			void* storage = game::markerStorage();
-			void* marker = storage
-				? rstorage::tryGetMarker(storage, rdirector::currentMarkerIndex(self))
-				: nullptr;
-			applyShake(self, marker);
+			applyShake(self, storage, rdirector::currentMarkerIndex(self));
 
 			// LAST, deliberately. The aperture offset has to survive everything
 			// above it, and it is not part of the shot: the spline and the shake

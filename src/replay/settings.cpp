@@ -256,6 +256,7 @@ namespace rsettings
 			"speedAmp", "speedFreq", "stopStill", "variation",
 			"unusedSine",
 			"dofAf", "dofDelta",
+			"shakeStyle", "impact", "shakeBlend",
 		};
 		static_assert(sizeof(kNames) / sizeof(*kNames) == P_COUNT,
 			"a Param was added without a name - it would serialise as \"?\" and "

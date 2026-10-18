@@ -96,6 +96,11 @@ namespace rsettings
 		P_DOF_AF,       // 0/1: measure focus in the world, at frame centre
 		P_DOF_DELTA,    // manual focus, as IGCS disparity (its FocusDelta)
 
+		// Shake v2.
+		P_SHAKE_STYLE,  // index into shake::kStyles (simple mode)
+		P_IMPACT,       // degrees: one-off jolt starting at this marker
+		P_SHAKE_BLEND,  // seconds: crossfade into the next marker's shake
+
 		P_COUNT
 	};
 

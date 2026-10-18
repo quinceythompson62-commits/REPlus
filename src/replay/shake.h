@@ -97,6 +97,110 @@ namespace shake
 		inline constexpr float kJitterFreqRatio = 22.9f;   // 8.0 / 0.35, kept
 	}
 
+	// -------------------------------------------------------------------------
+	// STYLES (Simple mode).
+	//
+	// A style is the part of a shake that is NOT a number you want to type:
+	// how the movement splits between the slow and fast layers, how far apart
+	// their rates sit, which axes it lives on, and whether there are footsteps
+	// in it. Amplitude and Frequency stay the two rows you tune; picking a
+	// style in the menu also drops its suggested values into them as a
+	// starting point.
+	//
+	// Style 0, Classic, is the exact pre-style behaviour: same split, same
+	// ratio, axis multipliers of 1. A project saved before styles existed has
+	// no style key, inherits Classic, and renders bit-for-bit as it did.
+	//
+	// Every multiplier here is applied ON TOP of the user's axis weights, so
+	// the Axes page still works in every style.
+	// -------------------------------------------------------------------------
+	struct StyleDef
+	{
+		const char* name;
+		// Split of one amplitude unit. Positions in metres, rotations in degrees.
+		float swayPos, jitPos, swayRot, jitRot;
+		float jitRatio;          // jitter rate = sway rate * this
+		float axisPos[3];        // lateral, forward, vertical multipliers
+		float axisRot[3];        // pitch, roll, yaw multipliers
+		// Footsteps. Rate = sway rate * bobRatio. Zero bobPos and bobRoll = none.
+		float bobPos;            // metres of vertical bob per amplitude unit
+		float bobRoll;           // degrees of side-to-side roll per amplitude unit
+		float bobRatio;
+		// Suggested starting values written into the marker when picked.
+		float defAmp, defFreq, defVariation;
+		const char* help;
+	};
+
+	inline constexpr StyleDef kStyles[] = {
+		{ "Classic",
+		  0.0350f, 0.0150f, 0.700f, 0.300f, 22.9f,
+		  {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f},
+		  0.0f, 0.0f, 0.0f,
+		  2.0f, 0.20f, 0.7f,
+		  "The original Rockstar Editor+ shake. Old projects use this." },
+		{ "Handheld",
+		  0.0350f, 0.0150f, 0.720f, 0.280f, 20.0f,
+		  {1.0f, 0.8f, 1.0f}, {1.0f, 1.15f, 0.9f},
+		  0.0f, 0.0f, 0.0f,
+		  2.2f, 0.22f, 0.7f,
+		  "Operator holding the camera, standing. Slow wander with a little rattle." },
+		{ "Shoulder Rig",
+		  0.0300f, 0.0150f, 0.800f, 0.200f, 14.0f,
+		  {0.8f, 0.6f, 1.1f}, {0.7f, 1.2f, 0.8f},
+		  0.0f, 0.0f, 0.0f,
+		  1.3f, 0.25f, 0.6f,
+		  "Heavier camera on the shoulder: steadier, breathes up and down, leans in roll." },
+		{ "Walking",
+		  0.0200f, 0.0100f, 0.550f, 0.150f, 18.0f,
+		  {1.0f, 0.6f, 0.8f}, {1.0f, 0.9f, 0.9f},
+		  0.0120f, 0.25f, 6.3f,
+		  1.5f, 0.30f, 0.5f,
+		  "Operator walking with the camera. Adds footstep bob and side-to-side sway." },
+		{ "Running",
+		  0.0250f, 0.0200f, 0.600f, 0.350f, 16.0f,
+		  {1.0f, 0.7f, 1.0f}, {1.1f, 1.0f, 1.0f},
+		  0.0180f, 0.35f, 6.0f,
+		  2.8f, 0.45f, 0.4f,
+		  "Running behind the action. Hard footfalls and a lot of energy." },
+		{ "Vehicle",
+		  0.0150f, 0.0350f, 0.250f, 0.750f, 30.0f,
+		  {0.5f, 0.3f, 1.0f}, {1.0f, 0.6f, 0.5f},
+		  0.0f, 0.0f, 0.0f,
+		  0.6f, 0.50f, 0.6f,
+		  "Camera mounted on a car. Road buzz, mostly up-and-down and pitch." },
+		{ "Helicopter",
+		  0.0400f, 0.0100f, 0.800f, 0.200f, 40.0f,
+		  {1.0f, 0.5f, 0.9f}, {0.8f, 1.0f, 0.6f},
+		  0.0f, 0.0f, 0.0f,
+		  1.4f, 0.15f, 0.8f,
+		  "Aerial from a chopper. Big slow drift with rotor vibration on top." },
+		{ "Drone",
+		  0.0450f, 0.0050f, 0.900f, 0.100f, 25.0f,
+		  {1.0f, 0.5f, 1.0f}, {0.7f, 0.8f, 1.0f},
+		  0.0f, 0.0f, 0.0f,
+		  0.7f, 0.12f, 0.6f,
+		  "Stabilised drone. Smooth floating drift, almost no buzz." },
+		{ "Tripod Breath",
+		  0.0400f, 0.0100f, 0.950f, 0.050f, 12.0f,
+		  {1.0f, 0.5f, 1.0f}, {1.0f, 0.8f, 1.0f},
+		  0.0f, 0.0f, 0.0f,
+		  0.15f, 0.25f, 0.5f,
+		  "Barely there. Makes a locked-off shot feel alive without looking shaky." },
+		{ "Earthquake",
+		  0.0200f, 0.0300f, 0.300f, 0.700f, 10.0f,
+		  {0.8f, 0.4f, 1.0f}, {1.0f, 1.0f, 0.7f},
+		  0.0f, 0.0f, 0.0f,
+		  2.5f, 0.80f, 1.0f,
+		  "Violent ground shake. Pair with Impact on the marker for a big hit." },
+	};
+	inline constexpr int kStyleCount = (int)(sizeof(kStyles) / sizeof(*kStyles));
+
+	inline const StyleDef& style(int i)
+	{
+		if (i < 0 || i >= kStyleCount) i = 0;
+		return kStyles[i];
+	}
+
 	struct Params
 	{
 		Layer sway  { 0.0f, 0.0f, 1.8f };
@@ -130,6 +234,12 @@ namespace shake
 		bool  simpleMode = true;   // the default a new user meets
 		float amplitude  = 1.0f;   // DEGREES of rotation (and 0.05 m per unit)
 		float frequency  = 0.35f;  // HERTZ, the slow layer's rate
+		int   style      = 0;      // index into kStyles; 0 = Classic
+
+		// Footsteps, filled in by resolve() from the style. Zero = none.
+		float bobPos  = 0.0f;      // metres
+		float bobRoll = 0.0f;      // degrees
+		float bobFreq = 0.0f;      // footfalls per second
 
 		// --- Speed coupling (BOTH modes) ---
 		//
@@ -156,17 +266,35 @@ namespace shake
 
 		// Expand simple mode into the layer model everything downstream uses.
 		// A no-op in complex mode, so callers can apply it unconditionally.
+		// resolve() multiplies the axis weights by the style's, so running it
+		// twice on one object would apply the style twice. evaluate() works on
+		// a copy and the debug log resolves its own copy, but the guard makes
+		// the mistake impossible rather than merely avoided.
+		bool resolved = false;
+
 		void resolve()
 		{
-			if (!simpleMode) return;
-			sway.posAmp   = amplitude * simple::kSwayPos;
-			sway.rotAmp   = amplitude * simple::kSwayRot;
-			jitter.posAmp = amplitude * simple::kJitterPos;
-			jitter.rotAmp = amplitude * simple::kJitterRot;
+			if (!simpleMode || resolved) return;
+			resolved = true;
+			const StyleDef& st = shake::style(style);
+			sway.posAmp   = amplitude * st.swayPos;
+			sway.rotAmp   = amplitude * st.swayRot;
+			jitter.posAmp = amplitude * st.jitPos;
+			jitter.rotAmp = amplitude * st.jitRot;
 
 			// The typed frequency IS the sway's rate in Hz; jitter tracks it.
 			sway.freq     = frequency;
-			jitter.freq   = frequency * simple::kJitterFreqRatio;
+			jitter.freq   = frequency * st.jitRatio;
+
+			for (int i = 0; i < 3; ++i)
+			{
+				axisPos[i] *= st.axisPos[i];
+				axisRot[i] *= st.axisRot[i];
+			}
+
+			bobPos  = amplitude * st.bobPos;
+			bobRoll = amplitude * st.bobRoll;
+			bobFreq = frequency * st.bobRatio;
 		}
 	};
 
@@ -341,6 +469,44 @@ namespace shake
 		}
 	}
 
+	struct Params;
+	namespace detail
+	{
+		// Footsteps for the Walking / Running styles.
+		//
+		// phase counts footfalls. |sin| bottoms out with a sharp corner at each
+		// heel strike and rises smoothly in between, which is what a walking
+		// camera does - a plain sine bob reads as floating. Roll and lateral
+		// drift run at half that rate, because weight moves left-right-left
+		// once per TWO steps. Each step is a little different in size, seeded,
+		// so it stays a pure function of time.
+		inline void addFootsteps(const Params& p, uint32_t seed, float timeMs,
+		                         float outPos[3], float outRotDeg[3]);
+	}
+
+	inline void detail::addFootsteps(const Params& p, uint32_t seed, float timeMs,
+	                                 float outPos[3], float outRotDeg[3])
+	{
+		if (p.bobFreq <= 0.0f || (p.bobPos <= 0.0f && p.bobRoll <= 0.0f)) return;
+
+		constexpr float kPi = 3.14159265f;
+		const float phase = (timeMs / 1000.0f) * p.bobFreq
+		                  + (hash11(seed + 0xB0Bu) * 0.5f + 0.5f);
+
+		// Per-step size, +-20%, smooth from one step to the next.
+		const float stepVar = 1.0f + 0.2f * valueNoise(seed + 0x57E9u, phase);
+
+		const float s      = sinf(kPi * phase);
+		const float dip    = fabsf(s) - 0.63662f;   // minus its mean, so no drift
+		const float sway   = sinf(kPi * phase + 0.4f);
+
+		outPos[2]    += p.bobPos * stepVar * dip * p.axisPos[2];
+		outPos[0]    += p.bobPos * 0.6f * sway * p.axisPos[0];
+		outPos[1]    += p.bobPos * 0.25f * cosf(2.0f * kPi * phase) * p.axisPos[1];
+		outRotDeg[1] += p.bobRoll * stepVar * sway * p.axisRot[1];
+		outRotDeg[0] += p.bobRoll * 0.35f * stepVar * dip * p.axisRot[0];
+	}
+
 	// Evaluate at a replay time. Outputs are CAMERA-LOCAL:
 	//   outPos    = { right, forward, up }   metres
 	//   outRotDeg = { pitch, roll,    yaw }  degrees about those axes
@@ -373,7 +539,6 @@ namespace shake
 		}
 
 		const float ampGain  = 1.0f + p.speedAmp  * sn;
-		const float freqGain = 1.0f + p.speedFreq * sn;
 
 		// Motion gate. Smoothstepped over a speed BAND rather than switched at
 		// a threshold, which is what removes the pop - and because the input is
@@ -405,12 +570,86 @@ namespace shake
 
 		p.sway.posAmp   *= aScale;  p.sway.rotAmp   *= aScale;
 		p.jitter.posAmp *= aScale;  p.jitter.rotAmp *= aScale;
-		p.sway.freq     *= freqGain;
-		p.jitter.freq   *= freqGain;
+		p.bobPos        *= aScale;  p.bobRoll       *= aScale;
 
-		detail::addLayer(p.sway,   p.octaves, s + 0x0000u, timeMs, var,
-			p.axisPos, p.axisRot, outPos, outRotDeg);
-		detail::addLayer(p.jitter, p.octaves, s + 0x9E37u, timeMs, var,
-			p.axisPos, p.axisRot, outPos, outRotDeg);
+		// --- speed -> rate, WITHOUT a phase jump -----------------------------
+		//
+		// The old code multiplied the layer frequencies by the speed gain. The
+		// shake is sin(time * freq), so changing freq at time t moves the phase
+		// by t * dfreq - forty seconds into a clip, a 10% rate change swept the
+		// phase through several whole cycles in a few frames. That is the
+		// "camera whips for a moment when it starts moving" artefact.
+		//
+		// The shake still has to be a pure function of time, so the rate cannot
+		// be integrated. Instead two copies run at FIXED rates - resting and
+		// full-speed - and the speed crossfades between them. Neither phase ever
+		// moves. The pair is close to uncorrelated, so the mix is equal-power
+		// normalised to keep the size constant through the fade.
+		const float rateHi = 1.0f + (p.speedFreq > 0.0f ? p.speedFreq : 0.0f);
+		const float mixHi  = (rateHi > 1.0f) ? sn : 0.0f;
+
+		auto run = [&](float rate, float gain)
+		{
+			if (gain <= 0.0f) return;
+			Params q = p;
+			q.sway.freq   *= rate;
+			q.jitter.freq *= rate;
+			q.bobFreq     *= rate;
+			q.sway.posAmp   *= gain;  q.sway.rotAmp   *= gain;
+			q.jitter.posAmp *= gain;  q.jitter.rotAmp *= gain;
+			q.bobPos        *= gain;  q.bobRoll       *= gain;
+
+			detail::addLayer(q.sway,   q.octaves, s + 0x0000u, timeMs, var,
+				q.axisPos, q.axisRot, outPos, outRotDeg);
+			detail::addLayer(q.jitter, q.octaves, s + 0x9E37u, timeMs, var,
+				q.axisPos, q.axisRot, outPos, outRotDeg);
+			detail::addFootsteps(q, s, timeMs, outPos, outRotDeg);
+		};
+
+		if (mixHi <= 0.0f)
+		{
+			run(1.0f, 1.0f);
+		}
+		else
+		{
+			const float a = 1.0f - mixHi, b = mixHi;
+			const float norm = 1.0f / sqrtf(a * a + b * b);
+			run(1.0f,   a * norm);
+			run(rateHi, b * norm);
+		}
+	}
+
+	// -------------------------------------------------------------------------
+	// IMPACT - a one-off jolt that starts at a marker.
+	//
+	// A hit, a landing, an explosion going off: the camera gets kicked, rings
+	// for a moment and settles. `strength` is the first swing in degrees.
+	// dtMs is time since the marker; outside 0..2.5 s it adds nothing.
+	//
+	// Still a pure function of time - scrubbing to the same frame gives the
+	// same jolt - and the seed picks which way it kicks.
+	// -------------------------------------------------------------------------
+	inline void addImpact(float strength, int seed, float dtMs,
+	                      float outPos[3], float outRotDeg[3])
+	{
+		if (strength <= 0.0f || dtMs < 0.0f) return;
+		const float t = dtMs / 1000.0f;
+		if (t > 2.5f) return;
+
+		constexpr float kTwoPi = 6.28318531f;
+		// Fast attack (no pop on the first frame), exponential ring-down.
+		const float env = (1.0f - expf(-t * 60.0f)) * expf(-t * 4.0f);
+
+		const uint32_t s = (uint32_t)seed * 2654435761u + 0xC0FFEEu;
+		const float dirP = detail::hash11(s)        < 0.0f ? -1.0f : 1.0f;
+		const float dirR = detail::hash11(s + 7u);   // -1..1, roll can go either way
+		const float dirY = detail::hash11(s + 13u);
+
+		const float a = strength * env;
+		outRotDeg[0] += a * dirP        * sinf(kTwoPi * 7.0f * t);
+		outRotDeg[1] += a * 0.55f * dirR * sinf(kTwoPi * 5.3f * t + 1.0f);
+		outRotDeg[2] += a * 0.30f * dirY * sinf(kTwoPi * 4.1f * t + 2.0f);
+		outPos[2]    += a * 0.015f * dirP * sinf(kTwoPi * 7.0f * t + 0.5f);
+		outPos[0]    += a * 0.008f * dirY * sinf(kTwoPi * 5.9f * t + 1.3f);
 	}
 }

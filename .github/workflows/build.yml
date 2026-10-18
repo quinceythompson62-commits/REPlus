@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build.vs -G "Visual Studio 17 2022" -A x64
+
+      - name: Build
+        run: cmake --build build.vs --config Release --parallel
+
+      - name: Collect
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force out | Out-Null
+          Copy-Item build.vs/BIN/Release/* out/ -Recurse -Force
+          Get-ChildItem out -Recurse | Format-Table FullName, Length
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RockstarEditorPlus-${{ github.ref_name }}-${{ github.run_number }}
+          path: out/

@@ -216,6 +216,7 @@ namespace menu
 			ROW_APPLY_ALL,
 			// Simple-mode enum rows. The numeric ones live below with the rest.
 			ROW_SHAKE_MODE, ROW_STOP_STILL, ROW_DOF_AF,
+			ROW_SHAKE_STYLE,               // shake v2: named style, simple mode
 			// Scene lights. Select/Enabled/Type/Shadows are named choices;
 			// Place and Delete are actions; the rest are numeric (below).
 			ROW_L_SELECT, ROW_L_SECTION, ROW_L_ADD,
@@ -237,6 +238,7 @@ namespace menu
 			// position - the lookup is by index, so a row added to one and not
 			// the other silently edits a different parameter.
 			ROW_DOF_DELTA,
+			ROW_IMPACT, ROW_SHAKE_BLEND,   // shake v2 - kNums entries follow DOF_DELTA
 			ROW_L_INTENSITY, ROW_L_RANGE, ROW_L_CONE,
 			ROW_L_R, ROW_L_G, ROW_L_B,
 			ROW_L_FALLOFF, ROW_L_CONEIN,
@@ -522,6 +524,8 @@ namespace menu
 				/* AX_ROLL   */ { P_AX_ROLL,   0.0f, 2.0f,    2, "",     false },
 				/* AX_YAW    */ { P_AX_YAW,    0.0f, 2.0f,    2, "",     false },
 				/* DOF_DELTA */ { P_DOF_DELTA, 0.0f, 1.0f,    5, "",     false, 0.01f },
+				/* IMPACT    */ { P_IMPACT,    0.0f, 10.0f,   2, "deg",  false, 10.0f },
+				/* BLEND     */ { P_SHAKE_BLEND,0.0f, 5.0f,   2, "s",    false, 10.0f },
 			};
 			if (!isNumeric(row)) return nullptr;
 			const int i = row - ROW_NUM_FIRST;
@@ -559,6 +563,8 @@ namespace menu
 			case rsettings::P_VARIATION: return c.shake.variation;
 			case rsettings::P_SPEED_AMP: return c.shake.speedAmp;
 			case rsettings::P_SPEED_FREQ:return c.shake.speedFreq;
+			case rsettings::P_IMPACT:    return 0.0f;
+			case rsettings::P_SHAKE_BLEND: return c.shakeBlend;
 			default:                     return 0.0f;
 			}
 		}
@@ -743,6 +749,7 @@ namespace menu
 				break;
 			case GRP_SHAKE:
 				s_rows[s_shown++] = ROW_SHAKE_MODE;
+				s_rows[s_shown++] = ROW_SHAKE_STYLE;
 				s_rows[s_shown++] = ROW_INTENSITY;
 				s_rows[s_shown++] = ROW_FREQ_MUL;
 				s_rows[s_shown++] = ROW_VARIATION;
@@ -753,6 +760,8 @@ namespace menu
 				s_rows[s_shown++] = ROW_SPEED_AMP;
 				s_rows[s_shown++] = ROW_SPEED_FREQ;
 				s_rows[s_shown++] = ROW_STOP_STILL;
+				s_rows[s_shown++] = ROW_IMPACT;
+				s_rows[s_shown++] = ROW_SHAKE_BLEND;
 				s_rows[s_shown++] = ROW_STEP;
 				s_rows[s_shown++] = ROW_APPLY_ALL;
 				break;
@@ -863,6 +872,9 @@ namespace menu
 			case ROW_L_BLACKOUT:   return "Ignore Blackout";
 			case ROW_L_INTSHADOW:  return "Interior Shadows";
 			case ROW_SHAKE_MODE: return "Shake Mode";
+			case ROW_SHAKE_STYLE: return "Shake Style";
+			case ROW_IMPACT:     return "Impact";
+			case ROW_SHAKE_BLEND: return "Shake Blend";
 			case ROW_INTENSITY:  return "Shake Amplitude";
 			case ROW_FREQ_MUL:   return "Shake Frequency";
 			case ROW_VARIATION:  return "Shake Variation";
@@ -913,6 +925,13 @@ namespace menu
 					? s.v[rsettings::P_SIMPLE] > 0.5f
 					: Config::get().shake.simpleMode;
 				return simple ? "Simple" : "Complex";
+			}
+			if (row == ROW_SHAKE_STYLE)
+			{
+				const int st = s.has(rsettings::P_SHAKE_STYLE)
+					? (int)(s.v[rsettings::P_SHAKE_STYLE] + 0.5f)
+					: Config::get().shake.style;
+				return shake::style(st).name;
 			}
 			if (row == ROW_DOF_AF)
 			{
@@ -1143,6 +1162,7 @@ namespace menu
 			case ROW_G_PATH:
 			case ROW_G_ROT:
 			case ROW_G_FOV:
+			case ROW_SHAKE_STYLE: return shake::kStyleCount;
 			case ROW_SHAKE_MODE:
 			case ROW_STOP_STILL:
 			case ROW_DOF_AF:     return 2;
@@ -1195,6 +1215,8 @@ namespace menu
 		// A restricted row MUST answer here, because the reason is the whole point
 		// of disabling it - see rowRestriction().
 		// -------------------------------------------------------------------------
+		void* currentMarker();   // defined with the Scaleform plumbing below
+
 		const char* rowHelp(int row)
 		{
 			static char buf[192];
@@ -1232,6 +1254,26 @@ namespace menu
 			case ROW_SHAKE_MODE:
 				return "Simple drives one amplitude and one frequency. Complex exposes "
 				       "the Sway and Jitter layers directly.";
+			case ROW_SHAKE_STYLE:
+			{
+				MarkerSettings cur{};
+				if (void* m = currentMarker()) cur = rsettings::get(rmarker::timeMs(m));
+				const int st = cur.has(rsettings::P_SHAKE_STYLE)
+					? (int)(cur.v[rsettings::P_SHAKE_STYLE] + 0.5f)
+					: Config::get().shake.style;
+				static char help[256];
+				snprintf(help, sizeof(help), "%s Picking a style also sets Amplitude, "
+					"Frequency and Variation to a good starting point.", shake::style(st).help);
+				return help;
+			}
+			case ROW_IMPACT:
+				return "A one-off jolt that starts at this marker and rings out over about "
+				       "a second, like a hit or a landing. Size of the first kick in degrees; "
+				       "2 to 4 is a solid hit. 0 = none.";
+			case ROW_SHAKE_BLEND:
+				return "Seconds to fade this marker's shake into the next marker's, ending on "
+				       "the next marker. Stops shake snapping when the style or strength "
+				       "changes. 0 = switch instantly at the marker.";
 			case ROW_INTENSITY:
 				return "Shake size, in DEGREES of rotation (and 5 cm of movement per "
 				       "degree). 2.0 to 2.5 reads as handheld.";
@@ -1766,6 +1808,27 @@ namespace menu
 			if (row == ROW_STOP_STILL)
 			{
 				s.v[rsettings::P_STOP_STILL] = (delta > 0) ? 1.0f : 0.0f;
+				return;
+			}
+			// Steps through the styles, wrapping. A style is a starting point,
+			// so it drops its suggested Amplitude, Frequency and Variation into
+			// the marker and switches it to Simple mode, where styles live.
+			// Classic leaves the numbers alone - it is the "as before" choice.
+			if (row == ROW_SHAKE_STYLE)
+			{
+				int st = s.has(rsettings::P_SHAKE_STYLE)
+					? (int)(s.v[rsettings::P_SHAKE_STYLE] + 0.5f)
+					: Config::get().shake.style;
+				st = (st + (delta > 0 ? 1 : shake::kStyleCount - 1)) % shake::kStyleCount;
+				s.v[rsettings::P_SHAKE_STYLE] = (float)st;
+				s.v[rsettings::P_SIMPLE]      = 1.0f;
+				if (st != 0)
+				{
+					const shake::StyleDef& d = shake::style(st);
+					s.v[rsettings::P_INTENSITY] = d.defAmp;
+					s.v[rsettings::P_FREQ_MUL]  = d.defFreq;
+					s.v[rsettings::P_VARIATION] = d.defVariation;
+				}
 				return;
 			}
 			if (row == ROW_DOF_AF)
@@ -2380,6 +2443,11 @@ namespace menu
 					s.v[p] = src.v[p];
 				for (int p = rsettings::P_SIMPLE; p <= rsettings::P_VARIATION; ++p)
 					s.v[p] = src.v[p];
+				// Style and blend are part of how the shake looks. Impact is
+				// NOT copied: it is a moment in one shot, and stamping it on
+				// every marker would turn one hit into a jolt at every key.
+				s.v[rsettings::P_SHAKE_STYLE] = src.v[rsettings::P_SHAKE_STYLE];
+				s.v[rsettings::P_SHAKE_BLEND] = src.v[rsettings::P_SHAKE_BLEND];
 				s.ourShake = src.ourShake;
 
 				// Our shake requires the marker to hold MARKER_SHAKE_NONE, or
@@ -2531,6 +2599,7 @@ namespace menu
 		inline bool rowChangesLayout(int row)
 		{
 			return row == ROW_GROUP        // switches the whole group
+			    || row == ROW_SHAKE_STYLE  // rewrites Amplitude/Frequency/Variation/Mode
 			    || row == ROW_G_HEADER     // pages the global block
 			    || row == ROW_G_PROFILE    // decides whether Curve Shape is greyed
 			    // All three decide whether a row BELOW them is greyed, and a

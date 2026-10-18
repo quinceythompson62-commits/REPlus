@@ -105,6 +105,9 @@ SplineWeight=0             ; camera mass on playback: 0 hits markers, 1 carried 
 ; Defaults each marker inherits; per-marker, set its Shake row to "Rockstar
 ; Editor+". Handheld starting point: 2.0 @ 0.20.
 ShakeSimpleMode=1          ; 1 = Amplitude/Frequency, 0 = the Sway/Jitter model
+ShakeStyle=0               ; 0 Classic 1 Handheld 2 Shoulder Rig 3 Walking 4 Running
+                           ; 5 Vehicle 6 Helicopter 7 Drone 8 Tripod Breath 9 Earthquake
+ShakeBlend=1.0             ; seconds to crossfade into the next marker's shake; 0 = hard cut
 ShakeAmplitude=1.0         ; degrees; 0.05 m of travel per degree
 ShakeFrequency=0.35        ; Hz
 ShakeVariation=0.7         ; 0 = metronomic, higher = less regular
