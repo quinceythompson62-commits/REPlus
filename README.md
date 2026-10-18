@@ -310,6 +310,23 @@ for one segment.
 
 Set a marker's stock **Shake** row to **Rockstar Editor+**.
 
+**Shake Style** (Simple mode) — pick what the camera is mounted on. Picking a
+style also drops a good starting Amplitude, Frequency and Variation into the
+marker; tune from there.
+
+| Style | Looks like |
+|---|---|
+| Classic | the original Rockstar Editor+ shake — old projects use this and render unchanged |
+| Handheld | operator standing, slow wander with a little rattle |
+| Shoulder Rig | heavier camera, steadier, breathes up and down, leans in roll |
+| Walking | footstep bob and left-right weight shift |
+| Running | hard footfalls, lots of energy |
+| Vehicle | car mount: road buzz, mostly vertical and pitch |
+| Helicopter | big slow aerial drift with rotor vibration |
+| Drone | stabilised, smooth floating drift |
+| Tripod Breath | barely there — makes a locked-off shot feel alive |
+| Earthquake | violent ground shake |
+
 **Simple mode** (default) — two real units, shared with the sibling Simple
 Camera project, so values transfer between them.
 
@@ -319,19 +336,26 @@ Camera project, so values transfer between them.
 | Shake Frequency | hertz. 0.35 ≈ a three-second wander, 0.20 slower |
 | Shake Variation | swell and settle over time. 0 = statistically flat |
 
-Handheld starting point: **amplitude 2.0–2.5 at frequency 0.20**.
+**Shake: Motion page**
 
-**Motion coupling** — off by default. `Motion → Intensity` at about 1.0 is the
-single biggest step towards a shake that reads as an operator rather than an
-effect. `Motion → Speed` scales rate the same way; `Stop When Still` fades out
-when the camera is parked.
+| Setting | |
+|---|---|
+| Motion → Intensity | extra amplitude when the camera moves. About 1.0 is the biggest single step towards an operator rather than an effect |
+| Motion → Speed | extra rate when moving. Crossfades between a resting and a moving shake, so it never "whips" when the camera starts moving |
+| Stop When Still | fade out while the camera is parked |
+| Impact | a one-off jolt that starts AT this marker and rings out over about a second — a hit, a landing, an explosion. Degrees; 2–4 is a solid hit |
+| Shake Blend | seconds over which this marker's shake fades into the next marker's, ending on the next marker. Changing style or strength between markers no longer snaps; a marker without our shake counts as no shake, so shake fades in and out too. 0 = the old instant switch |
 
 **Complex mode** drives the two layers directly — slow **Sway**, fast
 **Jitter**, each with movement, rotation and rate — plus per-axis weights on all
-six degrees of freedom.
+six degrees of freedom. Styles apply to Simple mode; Impact and Blend work in
+both.
 
-**Apply Shake to All** on any shake page copies that marker's shake to every
-marker in the project. Shake only; curve and easing are untouched.
+**Apply Shake to All** on any shake page copies that marker's shake (including
+style and blend, but not Impact) to every marker in the project. Curve and
+easing are untouched.
+
+Ini defaults: `ShakeStyle` (0–9) and `ShakeBlend` (seconds, default 1.0).
 
 > Shake is a function of clip time, so it is frozen while the playhead is.
 > Play or scrub to judge it.
@@ -708,6 +732,25 @@ project.
 
 **Duration** — rendering seeks frame by frame and is far slower than real time.
 Progress and an estimate go to the log every 15 seconds.
+
+### Quick Setup and the time estimate
+
+The **Quick Setup** row on the Export screen sets everything that decides render
+time in one press: **Draft** (8 samples), **Instagram** (32), **Final** (64) and
+**Max** (128), all at a 180° shutter, Sliding, with Depth of Field and Audio
+off. Change any row below it and it reads **Custom**.
+
+Its value also shows what the current settings will cost — the whole project's
+render time once one render has finished on your PC (the renderer measures how
+fast it ran and stores it in `Render.ini` as `MeasuredSecPerCapture` and
+`LastRenderSeconds`). The **Rockstar Editor+** row's description lists the
+cost breakdown and warns about anything unusually expensive: Depth of Field on,
+very high Bokeh Quality, more than 64 samples, the audio pass, too many settle
+frames, Walking mode.
+
+Bokeh Quality now shows its shot count and stops at 12 rings from the menu
+(the ini still accepts more). Highlight Boost moved off the Export screen to
+make room; it still works from `Render.ini` and RE+ Render Settings.
 
 ### Capture modes
 
