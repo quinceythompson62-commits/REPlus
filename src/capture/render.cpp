@@ -16,6 +16,8 @@
 #include "game/signatures.h"
 
 #include <cstdio>
+#include <utility>
+#include <shellapi.h>
 
 namespace render
 {
@@ -721,6 +723,71 @@ namespace render
 		//
 		// Rate-limited here rather than at each call site, so the interval cannot
 		// drift apart between modes either.
+		// --- the game window, for title progress and the done flash ----------
+		//
+		// The biggest visible top-level window this process owns. Looked up once
+		// and re-checked with IsWindow, because the game recreates its window
+		// when the display mode changes.
+		HWND s_gameWnd = nullptr;
+		char s_origTitle[256] = {};
+		bool s_titleChanged = false;
+
+		BOOL CALLBACK findGameWnd(HWND h, LPARAM lp)
+		{
+			DWORD pid = 0;
+			GetWindowThreadProcessId(h, &pid);
+			if (pid != GetCurrentProcessId() || !IsWindowVisible(h)) return TRUE;
+			if (GetWindow(h, GW_OWNER)) return TRUE;
+			RECT r{};
+			GetWindowRect(h, &r);
+			auto* best = (std::pair<HWND, long long>*)lp;
+			const long long area = (long long)(r.right - r.left) * (r.bottom - r.top);
+			if (area > best->second) { best->first = h; best->second = area; }
+			return TRUE;
+		}
+
+		HWND gameWindow()
+		{
+			if (s_gameWnd && IsWindow(s_gameWnd)) return s_gameWnd;
+			std::pair<HWND, long long> best{ nullptr, 0 };
+			EnumWindows(findGameWnd, (LPARAM)&best);
+			s_gameWnd = best.first;
+			return s_gameWnd;
+		}
+
+		// WM_SETTEXT through SendMessageTimeout, not SetWindowText: the window
+		// belongs to another thread, and a plain send would wait for it - a
+		// render thread blocked on the UI thread is how a hang starts. The
+		// string is marshalled by the system, so a timeout is harmless.
+		void setTitle(const char* text)
+		{
+			HWND h = gameWindow();
+			if (!h) return;
+			if (!s_titleChanged)
+			{
+				GetWindowTextA(h, s_origTitle, sizeof(s_origTitle));
+				s_titleChanged = true;
+			}
+			SendMessageTimeoutA(h, WM_SETTEXT, 0, (LPARAM)text,
+				SMTO_ABORTIFHUNG | SMTO_NORMAL, 100, nullptr);
+		}
+
+		void restoreTitle()
+		{
+			if (!s_titleChanged) return;
+			s_titleChanged = false;
+			HWND h = gameWindow();
+			if (h) SendMessageTimeoutA(h, WM_SETTEXT, 0, (LPARAM)s_origTitle,
+				SMTO_ABORTIFHUNG | SMTO_NORMAL, 100, nullptr);
+		}
+
+		void fmtLeft(float sec, char* out, size_t n)
+		{
+			if (sec < 90.0f)        snprintf(out, n, "%.0fs", sec);
+			else if (sec < 5400.0f) snprintf(out, n, "%.0f min", sec / 60.0f);
+			else                    snprintf(out, n, "%.1f h", sec / 3600.0f);
+		}
+
 		void reportProgress(bool force = false)
 		{
 			const uint32_t now = GetTickCount();
@@ -752,6 +819,17 @@ namespace render
 					"~%.0fs left",
 					s_frame, s_frames, 100.0f * s_frame / (float)s_frames, elapsed,
 					perFrame, perFrame * (float)(s_frames - s_frame));
+
+				if (Config::get().renderTitleProgress)
+				{
+					char left[32], title[160];
+					fmtLeft(perFrame * (float)(s_frames - s_frame), left, sizeof(left));
+					snprintf(title, sizeof(title),
+						"Rendering %d/%d (%.0f%%) - %.1fs/frame - %s left",
+						s_frame, s_frames, 100.0f * s_frame / (float)s_frames,
+						perFrame, left);
+					setTitle(title);
+				}
 			}
 		}
 
@@ -1051,6 +1129,24 @@ namespace render
 				logger::write("info", "render: measured %.4fs per captured frame "
 					"(%.1f captures per output frame) - used for the Export screen estimate",
 					c.measuredSecPerCapture, captures);
+			}
+
+			// Tell whoever walked away. Title back first, then the chime and a
+			// taskbar flash that keeps going until the game is focused.
+			restoreTitle();
+			{
+				const Config& c = Config::get();
+				if (c.renderDoneSound)
+				{
+					MessageBeep(complete ? MB_ICONASTERISK : MB_ICONHAND);
+					if (HWND h = gameWindow())
+					{
+						FLASHWINFO fi{ sizeof(fi), h, FLASHW_TRAY | FLASHW_TIMERNOFG, 0, 0 };
+						FlashWindowEx(&fi);
+					}
+				}
+				if (complete && c.renderOpenFolder && s_folder[0])
+					ShellExecuteA(nullptr, "open", s_folder, nullptr, nullptr, SW_SHOWNORMAL);
 			}
 
 			// Same argument as the pass below, one layer down: the engine is

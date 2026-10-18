@@ -792,7 +792,7 @@ struct Config
 	// text menu cannot be judged. Pushed to the add-on when a pass starts and
 	// not polled, so the panel is authoritative at every other moment.
 	float renderDofBokehSize = 0.15f;  // aperture diameter. THE creative control
-	int   renderDofQuality   = 12;     // rings; the sample total follows from it
+	int   renderDofQuality   = 5;      // rings; 5 = 46 shots. 12 was 235, far past need
 
 	bool  renderDofAutofocus = true;   // measure focus in the world each frame
 	// ALWAYS 0.5/0.5 - autofocus measures at the centre of frame.
@@ -811,8 +811,8 @@ struct Config
 	float renderDofFocusDelta = 0.05f;
 
 	float renderFps          = 30.0f;
-	int   renderSamples      = 64;
-	float renderShutter      = 1.0f;
+	int   renderSamples      = 32;     // Quick Setup "Instagram"
+	float renderShutter      = 0.5f;   // 180 degrees, the film look
 	int   renderSettleFrames = 3;
 
 	// Settle for a motion-blur SUB-sample, which moves the clock by a fraction
@@ -879,6 +879,13 @@ struct Config
 	// Seconds per game frame captured (one redraw), and the length of the last
 	// render in seconds of footage. Both 0 until a render has finished once.
 	float measuredSecPerCapture = 0.0f;
+
+	// Render comforts. Progress in the game's window title (so it shows on the
+	// taskbar while you do something else), a chime and a taskbar flash when
+	// it finishes, and optionally the output folder opened for you.
+	bool  renderTitleProgress = true;
+	bool  renderDoneSound     = true;
+	bool  renderOpenFolder    = false;
 	float lastRenderSeconds     = 0.0f;
 
 	// Depth-of-field aperture shots per output frame for a ring count.
@@ -948,7 +955,7 @@ struct Config
 	// On by default now that it costs one press rather than two. A silent
 	// render is almost never what someone wanted, and the failure was quiet -
 	// you found out when you opened the file.
-	bool renderAudio = true;
+	bool renderAudio = false;   // the sound pass was the usual cause of a stuck render
 
 	// Name of a preset in the mod's presets folder, e.g. "h265". When set and
 	// found it supplies both the args and the extension, overriding the two
@@ -979,7 +986,7 @@ struct Config
 	// and shares the editor happily. The renderer is the one exclusive feature,
 	// so it is the one thing that should be opted into rather than out of. Set
 	// EnableRenderer=1 in Render.ini when you want it.
-	bool  enableRenderer = false;
+	bool  enableRenderer = true;
 
 	// Leave the editor's playback and return to its menus once a render
 	// finishes, the same way a real export does.
@@ -1187,6 +1194,9 @@ struct Config
 
 		renderFps          = rFloat("RenderFps", renderFps);
 		measuredSecPerCapture = rFloat("MeasuredSecPerCapture", measuredSecPerCapture);
+		renderTitleProgress = rInt("RenderTitleProgress", renderTitleProgress ? 1 : 0) != 0;
+		renderDoneSound     = rInt("RenderDoneSound", renderDoneSound ? 1 : 0) != 0;
+		renderOpenFolder    = rInt("RenderOpenFolderWhenDone", renderOpenFolder ? 1 : 0) != 0;
 		lastRenderSeconds     = rFloat("LastRenderSeconds", lastRenderSeconds);
 		if (!(measuredSecPerCapture > 0.0f) || measuredSecPerCapture > 30.0f) measuredSecPerCapture = 0.0f;
 		if (!(lastRenderSeconds > 0.0f)) lastRenderSeconds = 0.0f;

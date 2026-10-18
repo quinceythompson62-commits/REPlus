@@ -191,7 +191,7 @@ set(REP_INI_RENDER [==[
 [Render]
 
 ; --- Capture ----------------------------------------------------------------
-EnableRenderer=0           ; master switch. Off = the game's own Export runs
+EnableRenderer=1           ; master switch. Off = the game's own Export runs
 
 ; Sliding = the clip plays; particles and TAA/SSR/RT stay live. Faster at 360.
 ; Walking = pause and seek per sample; exact shutter. Better below 0.5 shutter.
@@ -202,8 +202,8 @@ RenderCaptureMode=Sliding
 ; exposure. Costs the same either way, and both are FAR slower than no lens.
 RenderDepthOfField=0
 RenderFps=30               ; output rate, independent of your actual framerate
-RenderSamples=64           ; renders averaged per frame. 1 = no motion blur
-RenderShutter=1            ; 1.0 = 360 degrees, 0.5 = the 180 film convention
+RenderSamples=32           ; renders averaged per frame. 1 = no motion blur
+RenderShutter=0.5          ; 1.0 = 360 degrees, 0.5 = the 180 film convention
 RenderSettleFrames=3       ; Walking: redraw wait after a new-frame seek
 RenderSettleSubFrames=1    ; Walking: wait between sub-samples. Never 0
 RenderHighlightBoost=0.9   ; keeps speculars bright through accumulation
@@ -211,7 +211,7 @@ RenderHighlightBoost=0.9   ; keeps speculars bright through accumulation
 ; --- IGCS Depth of Field ----------------------------------------------------
 ; Bokeh SHAPE stays in ReShade's IGCS Connector panel - it is judged by eye.
 RenderDofBokehSize=0.15    ; aperture width. Bigger = shallower focus
-RenderDofQuality=12        ; rings of samples. Higher = smoother bokeh, slower
+RenderDofQuality=5         ; rings: 5 = 46 shots/frame, 12 = 235. Keep it low
 RenderDofAutofocus=1       ; measure focus in the world each frame
 RenderJpeg=0               ; 0 = PNG
 RenderQuality=100          ; JPEG only. Below 91 = chroma subsampled
@@ -234,7 +234,12 @@ RenderVideoArgs=-c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p
 RenderVideoExt=mp4
 
 ; --- Audio ------------------------------------------------------------------
-RenderAudio=1              ; one Export: a sound pass, then the frames
+RenderAudio=0              ; 1 = one Export does a sound pass, then the frames
+
+; Comforts
+RenderTitleProgress=1      ; progress and time left in the game window title
+RenderDoneSound=1          ; chime + taskbar flash when a render finishes
+RenderOpenFolderWhenDone=0 ; 1 = open the output folder when it finishes
 RenderMarkerSpeed=1        ; render a marker's slow/fast motion. 0 = ignore it
 ; Borrow a track from a file instead. Ignored while RenderAudio=1.
 AudioFromFile=

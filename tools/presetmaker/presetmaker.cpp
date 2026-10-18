@@ -216,6 +216,15 @@ static Setting kSettings[] =
 { "ExportCloseWhenDone", "Return to menus when done", S_BOOL, G_SESSION, nullptr,
   "Go back to the editor menus once the render finishes, rather than staying in playback." },
 
+{ "RenderTitleProgress", "Progress in window title", S_BOOL, G_SESSION, nullptr,
+  "Shows frames done, percent and time left in the game's window title while rendering, so you can see it on the taskbar from another app." },
+
+{ "RenderDoneSound", "Chime when finished", S_BOOL, G_SESSION, nullptr,
+  "Plays a Windows sound and flashes the game's taskbar button when a render finishes (or stops early)." },
+
+{ "RenderOpenFolderWhenDone", "Open folder when finished", S_BOOL, G_SESSION, nullptr,
+  "Opens the render's output folder in Explorer when it finishes. Off by default because it pulls you out of the game." },
+
 // --- Output and encoding ---------------------------------------------------
 { "RenderOutputFolder", "Output folder", S_TEXT, G_ENCODE, nullptr,
   "OPTIONAL. Leave it empty and renders go to RockstarEditorPlus\\Captures\\ next to the .asi - fill it in only to put them somewhere else.\r\n"
@@ -1176,13 +1185,28 @@ static bool encoderInBuild(const char* encoder)
 // ---------------------------------------------------------------------------
 //  Settings <-> controls
 // ---------------------------------------------------------------------------
+// What the MOD uses when a key is missing from Render.ini, for the keys whose
+// default is not 0/empty. Without this an older Render.ini that predates a key
+// would show it unticked here, and saving would then write that 0 for real.
+static const char* blankDefault(const char* key)
+{
+    static const struct { const char* key; const char* val; } kDefaults[] = {
+        { "RenderTitleProgress", "1" },
+        { "RenderDoneSound",     "1" },
+    };
+    for (const auto& d : kDefaults)
+        if (_stricmp(d.key, key) == 0) return d.val;
+    return "";
+}
+
 static void settingsToUi()
 {
     g_loading = true;
     for (int i = 0; i < kSettingCount; ++i)
     {
         const Setting& s = kSettings[i];
-        const std::string v = iniGet(s.key);
+        std::string v = iniGet(s.key);
+        if (v.empty()) v = blankDefault(s.key);
         switch (s.type)
         {
         case S_BOOL:

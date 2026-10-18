@@ -217,6 +217,9 @@ namespace menu
 			// Simple-mode enum rows. The numeric ones live below with the rest.
 			ROW_SHAKE_MODE, ROW_STOP_STILL, ROW_DOF_AF,
 			ROW_SHAKE_STYLE,               // shake v2: named style, simple mode
+			// Tools page - action rows. Copy/Paste act at once; the "to all" and
+			// reset rows take two presses, like Apply Shake to All.
+			ROW_T_COPY, ROW_T_PASTE, ROW_T_CURVE_ALL, ROW_T_RESET,
 			// Scene lights. Select/Enabled/Type/Shadows are named choices;
 			// Place and Delete are actions; the rest are numeric (below).
 			ROW_L_SELECT, ROW_L_SECTION, ROW_L_ADD,
@@ -269,7 +272,9 @@ namespace menu
 		//
 		// That is why "Shake" is two pages rather than one long one: what the
 		// shake IS, then how it reacts to movement.
-		enum Group { GRP_HIDDEN = 0, GRP_SPLINE, GRP_FOCUS, GRP_SHAKE, GRP_MOTION,
+		// GRP_TOOLS sits before the shake pages so it is reachable on every
+		// marker - the shake pages are gated behind our shake preset.
+		enum Group { GRP_HIDDEN = 0, GRP_SPLINE, GRP_FOCUS, GRP_TOOLS, GRP_SHAKE, GRP_MOTION,
 		             GRP_SWAY, GRP_JITTER, GRP_DETAIL, GRP_AXES,
 		             GRP_MAX };
 
@@ -319,10 +324,24 @@ namespace menu
 		// Drawn with ADD_COLUMN_ITEM, exactly like the stock "Edit Camera" row,
 		// so it carries no arrows to suggest otherwise. Its state lives in the
 		// help line, which is where a row with no value column has to put it.
+		inline bool isToolRow(int row)
+		{
+			return row == ROW_T_COPY || row == ROW_T_PASTE ||
+			       row == ROW_T_CURVE_ALL || row == ROW_T_RESET;
+		}
+
+		// Tools page state. One armed row at a time; the help line carries the
+		// result of the last action, for the row that did it.
+		int  s_toolArmed  = -1;
+		int  s_toolMsgRow = -1;
+		char s_toolMsg[256] = {};
+		bool s_haveClip   = false;
+		rsettings::MarkerSettings s_clip;
+
 		inline bool isActionRow(int row)
 		{
 			return row == ROW_APPLY_ALL || row == ROW_L_PLACE ||
-			       row == ROW_L_DELETE;
+			       row == ROW_L_DELETE || isToolRow(row);
 		}
 
 		// Two presses to fire, because this overwrites the shake settings on
@@ -723,7 +742,7 @@ namespace menu
 			// game's Drunk shake and see nothing happen.
 			// Focus sits above the gate on purpose: it applies to every marker, with
 			// or without our shake preset, and with or without a camera transition.
-			if (!g_ourShakeHere && s_group > GRP_FOCUS) s_group = GRP_FOCUS;
+			if (!g_ourShakeHere && s_group > GRP_TOOLS) s_group = GRP_TOOLS;
 
 			s_rows[s_shown++] = ROW_GROUP;
 			switch (s_group)
@@ -737,6 +756,14 @@ namespace menu
 				s_rows[s_shown++] = ROW_DOF_AF;
 				s_rows[s_shown++] = ROW_DOF_DELTA;
 				s_rows[s_shown++] = ROW_STEP;
+				break;
+
+			case GRP_TOOLS:
+				s_rows[s_shown++] = ROW_T_COPY;
+				s_rows[s_shown++] = ROW_T_PASTE;
+				s_rows[s_shown++] = ROW_T_CURVE_ALL;
+				if (g_ourShakeHere) s_rows[s_shown++] = ROW_APPLY_ALL;
+				s_rows[s_shown++] = ROW_T_RESET;
 				break;
 
 			case GRP_SPLINE:
@@ -841,6 +868,10 @@ namespace menu
 			case ROW_S_WETNESS: return "Wetness";
 			case ROW_S_TIMECYCLE: return "Timecycle";
 			case ROW_APPLY_ALL: return "Apply Shake to All";
+			case ROW_T_COPY:      return "Copy Marker Settings";
+			case ROW_T_PASTE:     return "Paste Marker Settings";
+			case ROW_T_CURVE_ALL: return "Apply Curve to All";
+			case ROW_T_RESET:     return "Reset This Marker";
 
 			// --- scene lights ---
 			case ROW_L_SELECT:    return "Light";
@@ -900,6 +931,7 @@ namespace menu
 				case GRP_HIDDEN: return "Closed";
 				case GRP_SPLINE: return "Spline";
 				case GRP_FOCUS:  return "Depth of Field";
+				case GRP_TOOLS:  return "Tools";
 				case GRP_SHAKE:  return "Shake";
 				case GRP_MOTION: return "Shake: Motion";
 				case GRP_SWAY:   return "Shake: Sway";
@@ -1399,6 +1431,37 @@ namespace menu
 			case ROW_AX_PITCH:   return "Weight on pitch. 0 disables that axis.";
 			case ROW_AX_ROLL:    return "Weight on roll. Moves the corners rather than the centre.";
 			case ROW_AX_YAW:     return "Weight on yaw. 0 disables that axis.";
+
+			case ROW_T_COPY:
+			case ROW_T_PASTE:
+			case ROW_T_CURVE_ALL:
+			case ROW_T_RESET:
+				if (s_toolArmed == row)
+					return row == ROW_T_RESET
+						? "Press again to clear every Rockstar Editor+ setting on THIS "
+						  "marker (curve, shake, focus) back to the defaults. No undo."
+						: "Press again to copy THIS marker's curve settings onto every "
+						  "marker in the project. No undo.";
+				if (s_toolMsgRow == row && s_toolMsg[0]) return s_toolMsg;
+				switch (row)
+				{
+				case ROW_T_COPY:
+					return "Remember this marker's Rockstar Editor+ settings - curve, "
+					       "easing, shake, impact and focus - so you can paste them onto "
+					       "another marker. The camera position is not copied.";
+				case ROW_T_PASTE:
+					return s_haveClip
+						? "Overwrite this marker's Rockstar Editor+ settings with the ones "
+						  "you copied."
+						: "Nothing copied yet. Use Copy Marker Settings on another marker "
+						  "first.";
+				case ROW_T_CURVE_ALL:
+					return "Copy this marker's Spline Path, Rotation, Tension and Ease onto "
+					       "every marker in the project. Shake and focus are left alone.";
+				default:
+					return "Clear every Rockstar Editor+ setting on this marker back to the "
+					       "defaults. Two presses.";
+				}
 
 			case ROW_APPLY_ALL:
 				if (s_applyArmed)
@@ -2466,6 +2529,79 @@ namespace menu
 			return written;
 		}
 
+		// The Tools page. Each action leaves a one-line result in the help line.
+		void runTool(int row)
+		{
+			void* marker = currentMarker();
+			s_toolMsgRow = row;
+			if (!marker)
+			{
+				snprintf(s_toolMsg, sizeof(s_toolMsg), "No marker selected.");
+				return;
+			}
+			const float key = rmarker::timeMs(marker);
+
+			switch (row)
+			{
+			case ROW_T_COPY:
+				s_clip = rsettings::get(key);
+				s_haveClip = true;
+				snprintf(s_toolMsg, sizeof(s_toolMsg),
+					"Copied. Go to another marker and use Paste Marker Settings.");
+				break;
+
+			case ROW_T_PASTE:
+				if (!s_haveClip)
+				{
+					snprintf(s_toolMsg, sizeof(s_toolMsg),
+						"Nothing copied yet. Use Copy Marker Settings first.");
+					break;
+				}
+				rsettings::set(key, s_clip);
+				// Our shake needs the game's own shake parked on None, or both run.
+				if (s_clip.ourShake) setShakeType(marker, kShakeNone);
+				rsettings::save();
+				snprintf(s_toolMsg, sizeof(s_toolMsg),
+					"Pasted onto this marker. Re-open the page to see the new values.");
+				break;
+
+			case ROW_T_CURVE_ALL:
+			{
+				const MarkerSettings src = rsettings::get(key);
+				void* storage = game::markerStorage();
+				int written = 0;
+				const int n = storage ? rstorage::markerCount(storage) : 0;
+				for (int i = 0; i < n; ++i)
+				{
+					void* m = rstorage::tryGetMarker(storage, i);
+					if (!m) continue;
+					const float k = rmarker::timeMs(m);
+					MarkerSettings s = rsettings::get(k);
+					s.path   = src.path;
+					s.orient = src.orient;
+					s.v[rsettings::P_ALPHA]    = src.v[rsettings::P_ALPHA];
+					s.v[rsettings::P_EASE_IN]  = src.v[rsettings::P_EASE_IN];
+					s.v[rsettings::P_EASE_OUT] = src.v[rsettings::P_EASE_OUT];
+					rsettings::set(k, s);
+					++written;
+				}
+				rsettings::save();
+				logger::write("info", "menu: applied curve to %d marker(s)", written);
+				snprintf(s_toolMsg, sizeof(s_toolMsg),
+					"Copied this marker's curve onto %d marker(s). Shake and focus were "
+					"left alone.", written);
+				break;
+			}
+
+			case ROW_T_RESET:
+				rsettings::set(key, MarkerSettings{});
+				rsettings::save();
+				snprintf(s_toolMsg, sizeof(s_toolMsg),
+					"This marker is back to the defaults. Its game Shake row is unchanged.");
+				break;
+			}
+		}
+
 		// Rebuild whichever menu is currently on screen. Editing a row refreshes
 		// the column the way the game itself does, and it must be the RIGHT
 		// column: this used to call PopulateCameraMenu unconditionally, which
@@ -2804,6 +2940,35 @@ namespace menu
 				}
 				// Fall through for left/right: adjust() handles those.
 			}
+
+			// Tools page. Same shape as Apply Shake to All below: accept acts
+			// (or arms, for the destructive ones), left/right are swallowed.
+			if (ours && g_shownKind == MENU_CAMERA && isToolRow(logicalAt(focus)))
+			{
+				const int row = logicalAt(focus);
+				if (navCode == gsig::NAV_ACCEPT)
+				{
+					const bool twoPress = (row == ROW_T_CURVE_ALL || row == ROW_T_RESET);
+					if (twoPress && s_toolArmed != row)
+					{
+						s_toolArmed = row;
+					}
+					else
+					{
+						s_toolArmed = -1;
+						runTool(row);
+					}
+					refreshHelpForFocus();
+					return;
+				}
+				if (isToggle)
+				{
+					if (s_toolArmed >= 0) { s_toolArmed = -1; refreshHelpForFocus(); }
+					return;
+				}
+			}
+			if (s_toolArmed >= 0 && logicalAt(focus) != s_toolArmed)
+				s_toolArmed = -1;
 
 			if (ours && g_shownKind == MENU_CAMERA &&
 			    logicalAt(focus) == ROW_APPLY_ALL)

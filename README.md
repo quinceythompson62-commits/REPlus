@@ -360,6 +360,18 @@ Ini defaults: `ShakeStyle` (0–9) and `ShakeBlend` (seconds, default 1.0).
 > Shake is a function of clip time, so it is frozen while the playhead is.
 > Play or scrub to judge it.
 
+### Tools page
+
+**Rockstar Editor+ → Tools** on any marker, with or without our shake:
+
+| Row | |
+|---|---|
+| Copy Marker Settings | remember this marker's curve, easing, shake, impact and focus (not the camera position) |
+| Paste Marker Settings | put them on this marker |
+| Apply Curve to All | this marker's Spline Path, Rotation, Tension and Ease onto every marker (two presses) |
+| Apply Shake to All | as on the shake pages (shown when this marker uses our shake) |
+| Reset This Marker | clear every Rockstar Editor+ setting on this marker (two presses) |
+
 ### Time of day and weather
 
 **Rockstar Editor+ → Scene**, in the top-level marker menu. Ships off.
@@ -751,6 +763,18 @@ frames, Walking mode.
 Bokeh Quality now shows its shot count and stops at 12 rings from the menu
 (the ini still accepts more). Highlight Boost moved off the Export screen to
 make room; it still works from `Render.ini` and RE+ Render Settings.
+
+### While it renders
+
+- The game window's title shows progress and time left, so you can watch it
+  from the taskbar (`RenderTitleProgress=1`).
+- A chime plays and the taskbar button flashes when it finishes
+  (`RenderDoneSound=1`).
+- `RenderOpenFolderWhenDone=1` opens the output folder at the end.
+
+New-install defaults are the Quick Setup **Instagram** settings: renderer on,
+32 samples at 180°, Bokeh Quality 5, Audio off. Existing `Render.ini` files keep
+their values.
 
 ### Capture modes
 
