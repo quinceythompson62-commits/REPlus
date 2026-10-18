@@ -872,6 +872,41 @@ struct Config
 
 	bool wantsVideo() const { return renderMode == RenderMode::Video; }
 
+	// --- render time estimate -------------------------------------------------
+	//
+	// Measured by the last finished render and written back to Render.ini, so
+	// the Export screen can say what the NEXT render will cost before it starts.
+	// Seconds per game frame captured (one redraw), and the length of the last
+	// render in seconds of footage. Both 0 until a render has finished once.
+	float measuredSecPerCapture = 0.0f;
+	float lastRenderSeconds     = 0.0f;
+
+	// Depth-of-field aperture shots per output frame for a ring count.
+	static int dofShots(int rings) { return 1 + 3 * rings * (rings + 1) / 2; }
+
+	// How many game frames the renderer draws per OUTPUT frame with the current
+	// settings. An estimate - it is what the time has to be divided by, not a
+	// promise about the exact schedule.
+	float capturesPerOutputFrame() const
+	{
+		if (renderDof)
+			return (float)dofShots(renderDofQuality) + (float)renderSettleFrames;
+		const int s = renderSamples < 1 ? 1 : renderSamples;
+		if (renderCaptureMode == 1)   // Sliding
+		{
+			const float sh = renderShutter > 0.05f ? renderShutter : 0.05f;
+			return (float)s / sh + (float)renderSettleFrames;
+		}
+		return (float)s * (1.0f + (float)renderSettleSubFrames) + (float)renderSettleFrames;
+	}
+
+	// Seconds per output frame; 0 when there is nothing measured to go on.
+	float estimatedSecPerFrame() const
+	{
+		return measuredSecPerCapture > 0.0f
+			? measuredSecPerCapture * capturesPerOutputFrame() : 0.0f;
+	}
+
 	// Kept alongside the video when set. The default deletes each frame once the
 	// encoder has taken it, which is the point of streaming rather than batching.
 	bool  renderKeepFrames = false;
@@ -1151,6 +1186,10 @@ struct Config
 		if (replayBlocks > gsig::REPLAY_BLOCKS_HARD_MAX) replayBlocks = gsig::REPLAY_BLOCKS_HARD_MAX;
 
 		renderFps          = rFloat("RenderFps", renderFps);
+		measuredSecPerCapture = rFloat("MeasuredSecPerCapture", measuredSecPerCapture);
+		lastRenderSeconds     = rFloat("LastRenderSeconds", lastRenderSeconds);
+		if (!(measuredSecPerCapture > 0.0f) || measuredSecPerCapture > 30.0f) measuredSecPerCapture = 0.0f;
+		if (!(lastRenderSeconds > 0.0f)) lastRenderSeconds = 0.0f;
 		renderSamples      = rInt("RenderSamples", renderSamples);
 		renderShutter      = rFloat("RenderShutter", renderShutter);
 

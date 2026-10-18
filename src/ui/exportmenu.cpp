@@ -86,6 +86,10 @@ namespace exportmenu
 		enum Row
 		{
 			ROW_ENABLE = 0,   // Config::enableRenderer
+			// One press sets the expensive rows together, and its value shows
+			// what the current settings will cost. Second, so it is the first
+			// thing under the master switch.
+			ROW_QUICK,        // Draft / Instagram / Final / Max
 			ROW_OUTPUT,       // renderMode + renderJpeg
 			ROW_PRESET,       // renderVideoPreset - Video output only
 			ROW_FPS,          // renderFps
@@ -160,6 +164,86 @@ namespace exportmenu
 		}
 
 		inline int clampi(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+		// --- Quick Setup ------------------------------------------------------
+		struct QuickPreset { const char* name; int samples; float shutter; };
+		// Index 0 is "Custom" - the label for settings matching none of them.
+		const QuickPreset kQuick[] = {
+			{ "Custom",      0,  0.0f },
+			{ "Draft",       8,  0.5f },
+			{ "Instagram",  32,  0.5f },
+			{ "Final",      64,  0.5f },
+			{ "Max",       128,  0.5f },
+		};
+		constexpr int kQuickCount = (int)(sizeof(kQuick) / sizeof(*kQuick));
+
+		int quickMatch()
+		{
+			const Config& c = Config::get();
+			if (c.renderDof || c.renderAudio || c.renderCaptureMode != 1) return 0;
+			for (int i = 1; i < kQuickCount; ++i)
+				if (c.renderSamples == kQuick[i].samples &&
+				    fabsf(c.renderShutter - kQuick[i].shutter) < 0.01f)
+					return i;
+			return 0;
+		}
+
+		void fmtDuration(float sec, char* out, size_t n)
+		{
+			if (sec < 90.0f)        snprintf(out, n, "%.0fs", sec);
+			else if (sec < 5400.0f) snprintf(out, n, "%.0f min", sec / 60.0f);
+			else                    snprintf(out, n, "%.1f h", sec / 3600.0f);
+		}
+
+		// What the current settings will cost, and anything that will make the
+		// render far slower than it needs to be. Appended to the master switch's
+		// description, which is allowed to read every other row.
+		const char* costNotes()
+		{
+			static char b[1200];
+			const Config& c = Config::get();
+			size_t used = 0;
+			auto add = [&](const char* fmt, auto... args) {
+				if (used < sizeof(b))
+					used += (size_t)snprintf(b + used, sizeof(b) - used, fmt, args...);
+			};
+			b[0] = 0;
+
+			const float caps = c.capturesPerOutputFrame();
+			const float spf  = c.estimatedSecPerFrame();
+			add("\n\nCOST: about %.0f redraws per output frame", caps);
+			if (spf > 0.0f)
+			{
+				add(", ~%.1fs per frame on this PC", spf);
+				if (c.lastRenderSeconds > 0.0f)
+				{
+					char t[32];
+					fmtDuration(spf * c.lastRenderSeconds * c.renderFps, t, sizeof(t));
+					add(", ~%s for a %.0fs project", t, c.lastRenderSeconds);
+				}
+			}
+			add(".");
+
+			if (c.renderDof)
+				add("\n- Depth of Field is ON: %d aperture shots per frame. "
+				    "Turn it off unless this shot needs real lens blur.",
+				    Config::dofShots(c.renderDofQuality));
+			if (c.renderDof && c.renderDofQuality > 6)
+				add("\n- Bokeh Quality %d is very high. 4 to 6 is enough for most shots.",
+				    c.renderDofQuality);
+			if (!c.renderDof && c.renderSamples > 64)
+				add("\n- %d motion blur samples. 32 to 64 looks the same in most shots.",
+				    c.renderSamples);
+			if (c.renderAudio)
+				add("\n- Audio is ON: the project plays once in real time first. "
+				    "If renders freeze at the sound pass, turn it off.");
+			if (c.renderSettleFrames > 8)
+				add("\n- %d settle frames per output frame. 3 to 6 is usual.",
+				    c.renderSettleFrames);
+			if (c.renderCaptureMode == 0 && !c.renderDof && c.renderSamples > 8)
+				add("\n- Walking mode doubles the redraws. Sliding is usually faster.");
+			return b;
+		}
 
 		// --- what we injected, and where --------------------------------------
 		struct Injected
@@ -312,6 +396,7 @@ namespace exportmenu
 			switch (row)
 			{
 			case ROW_ENABLE:    return "Rockstar Editor+";
+			case ROW_QUICK:     return "Quick Setup";
 			case ROW_OUTPUT:    return "Output";
 			case ROW_PRESET:    return "Encoder Preset";
 			case ROW_FPS:       return "Frame Rate";
@@ -337,6 +422,32 @@ namespace exportmenu
 			{
 			case ROW_ENABLE:
 				return c.enableRenderer ? "On" : "Off";
+
+			case ROW_QUICK:
+			{
+				// Preset name (or Custom), then the cost. The VALUE is rebuilt on
+				// every step, unlike the description, so this is where a number
+				// that changes with the press has to live.
+				const int q = quickMatch();
+				const char* name = q > 0 ? kQuick[q].name : "Custom";
+				const float spf = c.estimatedSecPerFrame();
+				if (spf <= 0.0f)
+				{
+					snprintf(buf, sizeof(buf), "%s (%.0f redraws/frame)", name,
+						c.capturesPerOutputFrame());
+					return buf;
+				}
+				if (c.lastRenderSeconds > 0.0f)
+				{
+					const float total = spf * c.lastRenderSeconds * c.renderFps;
+					char t[32];
+					fmtDuration(total, t, sizeof(t));
+					snprintf(buf, sizeof(buf), "%s ~%s", name, t);
+				}
+				else
+					snprintf(buf, sizeof(buf), "%s ~%.1fs/frame", name, spf);
+				return buf;
+			}
 
 			case ROW_OUTPUT:
 				if (c.wantsVideo())
@@ -373,7 +484,8 @@ namespace exportmenu
 				snprintf(buf, sizeof(buf), "%.3f", c.renderDofBokehSize);
 				return buf;
 			case ROW_DOF_QUALITY:
-				snprintf(buf, sizeof(buf), "%d rings", c.renderDofQuality);
+				snprintf(buf, sizeof(buf), "%d rings (%d shots)", c.renderDofQuality,
+					Config::dofShots(c.renderDofQuality));
 				return buf;
 			case ROW_DOF_AF:
 				return c.renderDofAutofocus ? "On" : "Off";
@@ -443,6 +555,21 @@ namespace exportmenu
 
 			switch (row)
 			{
+			case ROW_QUICK:
+				return "Sets everything that decides render time in one press. Motion "
+				       "blur samples, shutter, the lens and audio all move together, so "
+				       "nothing expensive is left switched on by accident.\n\n"
+				       "Draft: 8 samples, fast check of a shot.\n"
+				       "Instagram: 32 samples at a 180 degree shutter. The everyday one.\n"
+				       "Final: 64 samples, the full-quality master.\n"
+				       "Max: 128 samples, for slow, detailed shots.\n"
+				       "All four switch Depth of Field and Audio OFF and use Sliding.\n\n"
+				       "The time shown is an estimate for the whole project, based on how "
+				       "fast your last render actually ran. It appears after one render "
+				       "has finished. Change any row below and this reads Custom.\n\n"
+				       "Warnings about the current settings are on the Rockstar Editor+ "
+				       "row at the top.";
+
 			case ROW_ENABLE:
 			{
 				// THE REQUIREMENT IS STATED UNCONDITIONALLY, and the current
@@ -492,8 +619,8 @@ namespace exportmenu
 					"cannot read the GPU back buffer; that add-on is what does. Any other "
 					"IgcsConnector will NOT work - the bundled one carries the capture "
 					"channel this mod talks to.\n\n"
-					"%s",
-					status);
+					"%s%s",
+					status, costNotes());
 				return b;
 			}
 
@@ -797,9 +924,38 @@ namespace exportmenu
 				break;
 			}
 
+			case ROW_QUICK:
+			{
+				int q = quickMatch();
+				if (q <= 0) q = (delta > 0) ? 0 : 1;   // from Custom: right = Draft, left = Max
+				q += (delta > 0) ? 1 : -1;
+				if (q < 1) q = kQuickCount - 1;
+				if (q >= kQuickCount) q = 1;
+				const QuickPreset& p = kQuick[q];
+
+				c.renderSamples     = p.samples;
+				c.renderShutter     = p.shutter;
+				c.renderDof         = false;
+				c.renderAudio       = false;
+				c.renderCaptureMode = 1;
+				c.writeRenderInt("RenderSamples", c.renderSamples);
+				c.writeRenderFloat("RenderShutter", c.renderShutter);
+				c.writeRenderBool("RenderDepthOfField", false);
+				c.writeRenderBool("RenderAudio", false);
+				c.writeRenderStr("RenderCaptureMode", "Sliding");
+				logger::write("info", "export: Quick Setup -> %s", p.name);
+				break;
+			}
+
 			case ROW_DOF_QUALITY:
 			{
-				const int v = clampi(c.renderDofQuality + (delta > 0 ? 1 : -1), 1, 60);
+				// Capped at 12 from the menu. The shot count grows with the SQUARE
+				// of the rings - 12 is 235 shots a frame, 32 is 1585 - and a held
+				// arrow key used to walk straight past every sane value. The ini
+				// still accepts up to 60 for anyone who means it; stepping down
+				// from there works.
+				const int up   = c.renderDofQuality < 12 ? 12 : c.renderDofQuality;
+				const int v = clampi(c.renderDofQuality + (delta > 0 ? 1 : -1), 1, up);
 				c.renderDofQuality = v;
 				c.writeRenderInt("RenderDofQuality", v);
 				break;
@@ -929,8 +1085,11 @@ namespace exportmenu
 			// Encoder Preset took the slot that freed, so the column is FULL at
 			// thirteen: the next row added has to drop one here, and the guard
 			// where the rows are built says so out loud if it ever stops fitting.
-			(void)row;
-			return true;
+			//
+			// Quick Setup needed a slot, so Highlight Boost gave its up. It is a
+			// taste setting that rarely moves; it still works from Render.ini
+			// (RenderHighlightBoost) and from RE+ Render Settings.
+			return row != ROW_HIGHLIGHT;
 		}
 
 		bool rowEnabled(int row)

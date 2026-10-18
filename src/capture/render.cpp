@@ -1029,6 +1029,30 @@ namespace render
 			logger::write("info", "render: finishing at frame %d - replay mode %s",
 				s_frame, gsig::replayModeName(game::replayMode()));
 
+			// Remember how fast this machine renders, for the Export screen's
+			// estimate. Normalised to one captured game frame so it carries over
+			// when the samples, shutter or lens change. Ten frames minimum so a
+			// render aborted on the first frame (all loading) does not poison it.
+			if (s_frame >= 10 && s_startTick != 0)
+			{
+				Config& c = Config::get();
+				const float elapsed  = (GetTickCount() - s_startTick) / 1000.0f;
+				const float captures = c.capturesPerOutputFrame();
+				if (elapsed > 0.0f && captures > 0.0f)
+				{
+					c.measuredSecPerCapture = elapsed / (float)s_frame / captures;
+					c.writeRenderFloat("MeasuredSecPerCapture", c.measuredSecPerCapture);
+				}
+				if (!s_openEnded && s_frames > 0 && s_cfg.fps > 0.0f)
+				{
+					c.lastRenderSeconds = (float)s_frames / s_cfg.fps;
+					c.writeRenderFloat("LastRenderSeconds", c.lastRenderSeconds);
+				}
+				logger::write("info", "render: measured %.4fs per captured frame "
+					"(%.1f captures per output frame) - used for the Export screen estimate",
+					c.measuredSecPerCapture, captures);
+			}
+
 			// Same argument as the pass below, one layer down: the engine is
 			// holding a vtable pointer of OURS while a render steps the replay.
 			// Leaving it swapped past the render outlives what it points into.
