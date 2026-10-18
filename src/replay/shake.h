@@ -139,7 +139,7 @@ namespace shake
 		  2.0f, 0.20f, 0.7f,
 		  "The original Rockstar Editor+ shake. Old projects use this." },
 		{ "Handheld",
-		  0.0350f, 0.0150f, 0.720f, 0.280f, 20.0f,
+		  0.0380f, 0.0120f, 0.820f, 0.180f, 12.0f,
 		  {1.0f, 0.8f, 1.0f}, {1.0f, 1.15f, 0.9f},
 		  0.0f, 0.0f, 0.0f,
 		  2.2f, 0.22f, 0.7f,
@@ -157,13 +157,13 @@ namespace shake
 		  1.5f, 0.30f, 0.5f,
 		  "Operator walking with the camera. Adds footstep bob and side-to-side sway." },
 		{ "Running",
-		  0.0250f, 0.0200f, 0.600f, 0.350f, 16.0f,
+		  0.0280f, 0.0170f, 0.700f, 0.250f, 12.0f,
 		  {1.0f, 0.7f, 1.0f}, {1.1f, 1.0f, 1.0f},
 		  0.0180f, 0.35f, 6.0f,
 		  2.8f, 0.45f, 0.4f,
 		  "Running behind the action. Hard footfalls and a lot of energy." },
 		{ "Vehicle",
-		  0.0150f, 0.0350f, 0.250f, 0.750f, 30.0f,
+		  0.0150f, 0.0350f, 0.250f, 0.750f, 12.0f,
 		  {0.5f, 0.3f, 1.0f}, {1.0f, 0.6f, 0.5f},
 		  0.0f, 0.0f, 0.0f,
 		  0.6f, 0.50f, 0.6f,
@@ -187,7 +187,7 @@ namespace shake
 		  0.15f, 0.25f, 0.5f,
 		  "Barely there. Makes a locked-off shot feel alive without looking shaky." },
 		{ "Earthquake",
-		  0.0200f, 0.0300f, 0.300f, 0.700f, 10.0f,
+		  0.0200f, 0.0300f, 0.300f, 0.700f, 6.0f,
 		  {0.8f, 0.4f, 1.0f}, {1.0f, 1.0f, 0.7f},
 		  0.0f, 0.0f, 0.0f,
 		  2.5f, 0.80f, 1.0f,
@@ -382,7 +382,18 @@ namespace shake
 		// reproducible - Simple Camera can afford randomness because it never
 		// has to render the same take twice.
 		// -------------------------------------------------------------------
-		inline float sineFbm(uint32_t seed, float x, int octaves)
+		// Highest shake frequency allowed through, in Hz. Octaves above it fade out.
+		//
+		// Each octave runs 2.03x faster than the last, so the third octave of a
+		// 4-5 Hz jitter layer sits near 19 Hz - above what 24/30 fps footage can
+		// show. Sampled once per frame it aliases into random frame-to-frame
+		// jumps, which is exactly the "every shake jitters" report. A real camera
+		// has mass and cannot move that fast anyway, so fading those octaves out
+		// loses nothing you could see and removes the jitter.
+		inline constexpr float kMaxShakeHz  = 9.0f;
+		inline constexpr float kFadeStartHz = 5.0f;
+
+		inline float sineFbm(uint32_t seed, float x, int octaves, float baseHz = 0.0f)
 		{
 			if (octaves < 1) octaves = 1;
 			if (octaves > 6) octaves = 6;
@@ -397,7 +408,16 @@ namespace shake
 			float sum = 0.0f, amp = 1.0f, total = 0.0f, rate = 1.0f;
 			for (int o = 0; o < octaves; ++o)
 			{
-				sum   += sinf(x * rate + ph * kPhaseMul[o]) * amp;
+				float w = 1.0f;
+				if (baseHz > 0.0f)
+				{
+					const float hz = baseHz * rate;
+					float u = (hz - kFadeStartHz) / (kMaxShakeHz - kFadeStartHz);
+					if (u < 0.0f) u = 0.0f;
+					if (u > 1.0f) u = 1.0f;
+					w = 1.0f - u * u * (3.0f - 2.0f * u);
+				}
+				sum   += sinf(x * rate + ph * kPhaseMul[o]) * amp * w;
 				total += amp;
 				rate  *= 2.03f;
 				amp   *= 0.5f;
@@ -444,9 +464,11 @@ namespace shake
 				const uint32_t sp = seedBase + 0x01u + (uint32_t)i;
 				const uint32_t sr = seedBase + 0x11u + (uint32_t)i;
 
-				outPos[i] += sineFbm(sp, t * channelRate(sp, kSpread), octaves)
+				const float rp = channelRate(sp, kSpread), rr = channelRate(sr, kSpread);
+				const float hz = L.freq > 0.0f ? L.freq : 1.0f;
+				outPos[i] += sineFbm(sp, t * rp, octaves, hz * rp)
 				           * L.posAmp * axP[i];
-				outRot[i] += sineFbm(sr, t * channelRate(sr, kSpread), octaves)
+				outRot[i] += sineFbm(sr, t * rr, octaves, hz * rr)
 				           * L.rotAmp * axR[i];
 			}
 		}
