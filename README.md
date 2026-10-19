@@ -355,7 +355,7 @@ both.
 style and blend, but not Impact) to every marker in the project. Curve and
 easing are untouched.
 
-Ini defaults: `ShakeStyle` (0–9) and `ShakeBlend` (seconds, default 1.0).
+Ini defaults: `ShakeStyle` (0–15) and `ShakeBlend` (seconds, default 1.0).
 
 > Shake is a function of clip time, so it is frozen while the playhead is.
 > Play or scrub to judge it.
