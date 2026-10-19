@@ -18,6 +18,7 @@
 #include <cstdio>
 #include <utility>
 #include <shellapi.h>
+#include <dbghelp.h>
 
 namespace render
 {
@@ -788,6 +789,89 @@ namespace render
 			else                    snprintf(out, n, "%.1f h", sec / 3600.0f);
 		}
 
+		// --- HANG WATCHDOG ----------------------------------------------------
+		//
+		// A render that freezes leaves nothing behind: the game stops presenting,
+		// so the pump never runs again, no line is logged and no crash handler
+		// fires - the process just sits there. That is the one failure this log
+		// cannot explain, and it has happened at the same frame on repeat runs.
+		//
+		// So a separate thread watches the frame counter. If it has not moved for
+		// kHangMs while a render is running, it writes a small minidump (thread
+		// stacks and module list, a few MB) into the render's folder, once. The
+		// dump is written BEFORE anything is logged: if the hang is a lock held
+		// by the logger's owner, logging first would hang the watchdog too.
+		constexpr DWORD kHangMs = 90000;
+		volatile LONG   s_wdRun    = 0;
+		HANDLE          s_wdThread = nullptr;
+
+		DWORD WINAPI hangWatchdog(void*)
+		{
+			int   lastFrame = -1;
+			DWORD since     = GetTickCount();
+			bool  dumped    = false;
+			while (InterlockedCompareExchange(&s_wdRun, 0, 0))
+			{
+				Sleep(1000);
+				const int f = *(volatile int*)&s_frame;
+				const DWORD now = GetTickCount();
+				if (f != lastFrame) { lastFrame = f; since = now; continue; }
+				if (dumped || now - since < kHangMs) continue;
+				dumped = true;
+
+				char path[MAX_PATH];
+				SYSTEMTIME st; GetLocalTime(&st);
+				snprintf(path, sizeof(path), "%s\\hang_frame%06d_%02d%02d%02d.dmp",
+					s_folder, f, st.wHour, st.wMinute, st.wSecond);
+
+				bool ok = false;
+				if (HMODULE dh = LoadLibraryW(L"dbghelp.dll"))
+				{
+					using DumpFn = BOOL(WINAPI*)(HANDLE, DWORD, HANDLE, MINIDUMP_TYPE,
+						PMINIDUMP_EXCEPTION_INFORMATION, PMINIDUMP_USER_STREAM_INFORMATION,
+						PMINIDUMP_CALLBACK_INFORMATION);
+					auto dump = (DumpFn)GetProcAddress(dh, "MiniDumpWriteDump");
+					HANDLE h = CreateFileA(path, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+						FILE_ATTRIBUTE_NORMAL, nullptr);
+					if (dump && h != INVALID_HANDLE_VALUE)
+					{
+						const MINIDUMP_TYPE type = (MINIDUMP_TYPE)(MiniDumpNormal |
+							MiniDumpWithThreadInfo | MiniDumpWithUnloadedModules);
+						ok = dump(GetCurrentProcess(), GetCurrentProcessId(), h, type,
+							nullptr, nullptr, nullptr) != FALSE;
+					}
+					if (h != INVALID_HANDLE_VALUE) CloseHandle(h);
+				}
+
+				float clock = -1.0f;
+				__try { if (game::addr_g_ReplayTimeMs) clock = *(float*)game::addr_g_ReplayTimeMs; }
+				__except (EXCEPTION_EXECUTE_HANDLER) {}
+
+				logger::write("info",
+					"render: !! no progress for %lus at frame %d (clip clock %.3f ms) - "
+					"the game looks frozen. %s %s",
+					(unsigned long)((now - since) / 1000), f, clock,
+					ok ? "Hang dump written:" : "Could not write a hang dump to", path);
+			}
+			return 0;
+		}
+
+		void startHangWatchdog()
+		{
+			if (s_wdThread) return;
+			InterlockedExchange(&s_wdRun, 1);
+			s_wdThread = CreateThread(nullptr, 0, &hangWatchdog, nullptr, 0, nullptr);
+		}
+
+		void stopHangWatchdog()
+		{
+			if (!s_wdThread) return;
+			InterlockedExchange(&s_wdRun, 0);
+			WaitForSingleObject(s_wdThread, 3000);
+			CloseHandle(s_wdThread);
+			s_wdThread = nullptr;
+		}
+
 		void reportProgress(bool force = false)
 		{
 			const uint32_t now = GetTickCount();
@@ -814,11 +898,15 @@ namespace render
 			}
 			else
 			{
+				// The clip clock rides along so a stall can be placed on the
+				// timeline - which marker, which speed - from the log alone.
+				const float clipMs = game::addr_g_ReplayTimeMs
+					? *(float*)game::addr_g_ReplayTimeMs : -1.0f;
 				logger::write("info",
 					"render: %d/%d frames (%.0f%%), %.0fs elapsed, %.1fs/frame, "
-					"~%.0fs left",
+					"~%.0fs left, clip %.1f ms",
 					s_frame, s_frames, 100.0f * s_frame / (float)s_frames, elapsed,
-					perFrame, perFrame * (float)(s_frames - s_frame));
+					perFrame, perFrame * (float)(s_frames - s_frame), clipMs);
 
 				if (Config::get().renderTitleProgress)
 				{
@@ -1106,6 +1194,7 @@ namespace render
 			// round trip to ask for.
 			logger::write("info", "render: finishing at frame %d - replay mode %s",
 				s_frame, gsig::replayModeName(game::replayMode()));
+			stopHangWatchdog();
 
 			// Remember how fast this machine renders, for the Export screen's
 			// estimate. Normalised to one captured game frame so it carries over
@@ -1746,6 +1835,7 @@ namespace render
 
 			s_startTick  = GetTickCount();
 			s_lastReport = s_startTick;
+			startHangWatchdog();
 			s_lastBeat = fxcapture::heartbeat();
 
 			// Sliding: let the clip PLAY, slowly, and take whatever is presented.
