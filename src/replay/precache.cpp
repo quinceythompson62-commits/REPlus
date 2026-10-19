@@ -9,6 +9,7 @@
 #include "replay/precache.h"
 #include "capture/render.h"
 #include "game/signatures.h"
+#include <intrin.h>
 
 // =============================================================================
 //  The editor stalling between every action
@@ -210,6 +211,128 @@ namespace precache
 		//  changes which branch the function returns through, and the timeout is
 		//  a value the engine already writes to itself (5000 -> 1000 on failure)
 		//  - so a smaller number is a value it is already built to hold.
+		// ---------------------------------------------------------------------
+		//  EXPORT STREAMING WAIT - the render freeze.
+		// ---------------------------------------------------------------------
+		//  While the engine believes it is exporting video - which RE+ makes it
+		//  believe for the fixed-time step - it runs a pre-frame pass on the main
+		//  thread that requests every replay entity's assets and then calls the
+		//  streaming engine's LoadAllRequestedObjects. That is a plain loop:
+		//
+		//      while (pending[type] != 0) { pump streaming; Sleep(n); }
+		//
+		//  with no timer at all. On a stock install everything streams and it
+		//  returns within a frame or two. On a modded one, a request that can
+		//  never be satisfied (an asset that will not fit, or fails to load)
+		//  keeps the count above zero for ever: the game stops presenting, uses
+		//  almost no CPU, and the render sits on one frame until it is killed.
+		//  Two hang dumps taken during real renders both had the main thread in
+		//  exactly this loop.
+		//
+		//  The fix gives the loop a deadline. The Sleep it calls is the game's
+		//  own import thunk; we hook that thunk, and only when the call returns
+		//  to THIS loop's Sleep site, during an RE+ render, do we count. Past
+		//  the deadline the return address is pointed at the loop's own exit -
+		//  the instruction its `pending == 0` test jumps to - so the function
+		//  leaves through its normal epilogue exactly as if the count had hit
+		//  zero. Nothing about the streaming state is touched; the unfinished
+		//  request simply carries on in the background.
+		//
+		//  The first timeout of a run is generous. Once a wait has been cut,
+		//  the same stuck request would otherwise cost the full deadline on
+		//  every following game frame (32+ per output frame), so later waits
+		//  get a short one until a wait finishes on its own again.
+		constexpr DWORD kExportWaitFirstMs = 2000;
+		constexpr DWORD kExportWaitStuckMs = 100;
+		constexpr DWORD kExportWaitGapMs   = 250;   // longer between sleeps = a new wait
+
+		using FnSleepThunk = void(__fastcall*)(DWORD);
+		FnSleepThunk origSleepThunk = nullptr;
+		uintptr_t    s_waitRet  = 0;   // return address inside the wait loop
+		uintptr_t    s_waitExit = 0;   // the loop's own exit (pending == 0 branch)
+
+		DWORD  s_waitFirst = 0, s_waitLast = 0;
+		bool   s_waitStuck = false, s_waitPrevCut = false;
+		unsigned long long s_waitCuts = 0;
+		double s_waitWorstMs = 0.0;
+
+		void __fastcall hkSleepThunk(DWORD ms)
+		{
+			origSleepThunk(ms);
+
+			void** ra = (void**)_AddressOfReturnAddress();
+			if ((uintptr_t)*ra != s_waitRet || !s_waitExit) return;
+			if (!render::active()) { s_waitFirst = 0; return; }
+
+			const DWORD now = GetTickCount();
+			if (s_waitFirst == 0 || now - s_waitLast > kExportWaitGapMs)
+			{
+				// A new wait. If the previous one ended without our help, the
+				// stuck request has cleared - go back to the generous deadline.
+				if (s_waitFirst != 0 && !s_waitPrevCut) s_waitStuck = false;
+				s_waitFirst   = now;
+				s_waitPrevCut = false;
+			}
+			s_waitLast = now;
+
+			const DWORD limit = s_waitStuck ? kExportWaitStuckMs : kExportWaitFirstMs;
+			const DWORD held  = now - s_waitFirst;
+			if (held < limit) return;
+
+			*ra = (void*)s_waitExit;
+			++s_waitCuts;
+			if ((double)held > s_waitWorstMs) s_waitWorstMs = (double)held;
+			if (s_waitCuts <= 5 || (s_waitCuts % 500) == 0)
+				logger::write("info",
+					"precache: export streaming wait cut after %lu ms (%llu so far) - a "
+					"requested asset would not finish loading; the frame renders without "
+					"waiting for it instead of freezing the game",
+					(unsigned long)held, s_waitCuts);
+			s_waitStuck   = true;
+			s_waitPrevCut = true;
+			s_waitFirst   = 0;
+		}
+
+		void installExportWaitCap()
+		{
+			// The loop's sleep, its pending test and the exit branch, as one run:
+			//   mov ecx,[sleepMs] ; call SleepThunk ; cmp dword [r15+rdi*8+1C4h],0 ;
+			//   je exit
+			memory site = memory::scan(
+				"8B 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 41 83 BC FF C4 01 00 00 00 0F 84 ?? ?? ?? ??",
+				true);
+			if (!site.address)
+			{
+				logger::write("info",
+					"precache: export streaming wait not found - a render can still freeze "
+					"on an asset that never finishes loading");
+				return;
+			}
+			const uintptr_t a = site.address;
+			const uintptr_t thunk = a + 11 + *(int32_t*)(a + 7);
+			s_waitRet  = a + 11;
+			s_waitExit = a + 26 + *(int32_t*)(a + 22);
+
+			const uintptr_t lo = memory::base(), hi = lo + memory::imageSize();
+			if (thunk < lo || thunk >= hi || s_waitExit < lo || s_waitExit >= hi)
+			{
+				logger::write("info",
+					"precache: export streaming wait decoded outside the game - left alone");
+				s_waitRet = s_waitExit = 0;
+				return;
+			}
+
+			if (memory(thunk).hook(hkSleepThunk, &origSleepThunk, "export wait sleep"))
+				logger::write("info",
+					"precache: export streaming wait capped (%lu ms, then %lu ms while an "
+					"asset stays stuck) at rva 0x%llX. Stock has no timer: one asset that "
+					"cannot load froze renders for ever.",
+					(unsigned long)kExportWaitFirstMs, (unsigned long)kExportWaitStuckMs,
+					(unsigned long long)(a - lo));
+			else
+				s_waitRet = s_waitExit = 0;
+		}
+
 		using FnLoadModel = bool(__fastcall*)(void*, unsigned, int, char, char,
 		                                      int*, int*, unsigned);
 		FnLoadModel origLoadModel = nullptr;
@@ -485,6 +608,10 @@ namespace precache
 				s_wouldWait / 2, s_wouldWait, s_calls, s_audioSkips,
 				s_preloadForced, s_preloadWorstMs,
 				s_urgentCalls, s_urgentSpun, s_urgentMs);
+			if (s_waitCuts)
+				logger::write("info",
+					"precache: export streaming wait cut %llu time(s), longest %.0f ms",
+					s_waitCuts, s_waitWorstMs);
 
 			// Should always be zero - see inEditorStrict(). Only the streaming
 			// gate feeds this; the polls and the clip-load paths do not, because
@@ -499,6 +626,8 @@ namespace precache
 	void install()
 	{
 		const Config& cfg = Config::get();
+
+		installExportWaitCap();
 
 		// Say it in the log, because "does this touch my actual game" is the
 		// first question anyone asks of a streaming change, and the answer
