@@ -801,9 +801,80 @@ namespace render
 		// stacks and module list, a few MB) into the render's folder, once. The
 		// dump is written BEFORE anything is logged: if the hang is a lock held
 		// by the logger's owner, logging first would hang the watchdog too.
-		constexpr DWORD kHangMs = 90000;
+		constexpr DWORD kHangMs = 45000;
 		volatile LONG   s_wdRun    = 0;
 		HANDLE          s_wdThread = nullptr;
+
+		// One minidump of this process. Thread stacks and modules - a few MB.
+		bool writeHangDump(const char* path)
+		{
+			bool ok = false;
+			if (HMODULE dh = LoadLibraryW(L"dbghelp.dll"))
+			{
+				using DumpFn = BOOL(WINAPI*)(HANDLE, DWORD, HANDLE, MINIDUMP_TYPE,
+					PMINIDUMP_EXCEPTION_INFORMATION, PMINIDUMP_USER_STREAM_INFORMATION,
+					PMINIDUMP_CALLBACK_INFORMATION);
+				auto dump = (DumpFn)GetProcAddress(dh, "MiniDumpWriteDump");
+				HANDLE h = CreateFileA(path, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+					FILE_ATTRIBUTE_NORMAL, nullptr);
+				if (dump && h != INVALID_HANDLE_VALUE)
+				{
+					const MINIDUMP_TYPE type = (MINIDUMP_TYPE)(MiniDumpNormal |
+						MiniDumpWithThreadInfo | MiniDumpWithUnloadedModules);
+					ok = dump(GetCurrentProcess(), GetCurrentProcessId(), h, type,
+						nullptr, nullptr, nullptr) != FALSE;
+				}
+				if (h != INVALID_HANDLE_VALUE) CloseHandle(h);
+			}
+			return ok;
+		}
+
+		// The game's code section AS IT IS IN MEMORY. The exe on disk is
+		// encrypted, so a dump's return addresses cannot be read against it; the
+		// running copy is decrypted, and this is what lets a frozen thread's
+		// loop actually be disassembled. Unreadable pages are written as zeros.
+		bool writeCodeSection(const char* path)
+		{
+			const auto base = (uint8_t*)GetModuleHandleW(nullptr);
+			if (!base) return false;
+			const auto dos = (IMAGE_DOS_HEADER*)base;
+			const auto nt  = (IMAGE_NT_HEADERS64*)(base + dos->e_lfanew);
+			const IMAGE_SECTION_HEADER* sec = IMAGE_FIRST_SECTION(nt);
+			const IMAGE_SECTION_HEADER* text = nullptr;
+			for (unsigned i = 0; i < nt->FileHeader.NumberOfSections; ++i)
+				if (memcmp(sec[i].Name, ".text", 5) == 0) { text = &sec[i]; break; }
+			if (!text) return false;
+
+			HANDLE h = CreateFileA(path, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+				FILE_ATTRIBUTE_NORMAL, nullptr);
+			if (h == INVALID_HANDLE_VALUE) return false;
+
+			// Header: rva of the section, then its size, so the file maps itself.
+			const uint32_t hdr[2] = { text->VirtualAddress, text->Misc.VirtualSize };
+			DWORD wr = 0;
+			WriteFile(h, hdr, sizeof(hdr), &wr, nullptr);
+
+			static uint8_t page[4096];
+			const uint8_t* p   = base + text->VirtualAddress;
+			const uint8_t* end = p + text->Misc.VirtualSize;
+			for (; p < end; p += sizeof(page))
+			{
+				const size_t n = (size_t)((end - p) < (ptrdiff_t)sizeof(page) ? (end - p) : sizeof(page));
+				MEMORY_BASIC_INFORMATION mbi{};
+				bool readable = VirtualQuery(p, &mbi, sizeof(mbi)) == sizeof(mbi) &&
+					mbi.State == MEM_COMMIT &&
+					!(mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD));
+				if (readable)
+				{
+					__try { memcpy(page, p, n); }
+					__except (EXCEPTION_EXECUTE_HANDLER) { memset(page, 0, n); }
+				}
+				else memset(page, 0, n);
+				WriteFile(h, page, (DWORD)n, &wr, nullptr);
+			}
+			CloseHandle(h);
+			return true;
+		}
 
 		DWORD WINAPI hangWatchdog(void*)
 		{
@@ -819,39 +890,44 @@ namespace render
 				if (dumped || now - since < kHangMs) continue;
 				dumped = true;
 
+				// Three dumps a second and a half apart: a thread that is stuck on
+				// one instruction across all three is blocked, one whose position
+				// moves is spinning in a loop. One dump cannot tell those apart.
 				char path[MAX_PATH];
 				SYSTEMTIME st; GetLocalTime(&st);
-				snprintf(path, sizeof(path), "%s\\hang_frame%06d_%02d%02d%02d.dmp",
-					s_folder, f, st.wHour, st.wMinute, st.wSecond);
-
 				bool ok = false;
-				if (HMODULE dh = LoadLibraryW(L"dbghelp.dll"))
+				for (int k = 0; k < 3; ++k)
 				{
-					using DumpFn = BOOL(WINAPI*)(HANDLE, DWORD, HANDLE, MINIDUMP_TYPE,
-						PMINIDUMP_EXCEPTION_INFORMATION, PMINIDUMP_USER_STREAM_INFORMATION,
-						PMINIDUMP_CALLBACK_INFORMATION);
-					auto dump = (DumpFn)GetProcAddress(dh, "MiniDumpWriteDump");
-					HANDLE h = CreateFileA(path, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
-						FILE_ATTRIBUTE_NORMAL, nullptr);
-					if (dump && h != INVALID_HANDLE_VALUE)
-					{
-						const MINIDUMP_TYPE type = (MINIDUMP_TYPE)(MiniDumpNormal |
-							MiniDumpWithThreadInfo | MiniDumpWithUnloadedModules);
-						ok = dump(GetCurrentProcess(), GetCurrentProcessId(), h, type,
-							nullptr, nullptr, nullptr) != FALSE;
-					}
-					if (h != INVALID_HANDLE_VALUE) CloseHandle(h);
+					char one[MAX_PATH];
+					snprintf(one, sizeof(one), "%s\\hang_frame%06d_%02d%02d%02d_%d.dmp",
+						s_folder, f, st.wHour, st.wMinute, st.wSecond, k + 1);
+					ok = writeHangDump(one) || ok;
+					if (k == 0) snprintf(path, sizeof(path), "%s", one);
+					if (k < 2) Sleep(1500);
 				}
+				char code[MAX_PATH];
+				snprintf(code, sizeof(code), "%s\\hang_code.bin", s_folder);
+				writeCodeSection(code);
 
 				float clock = -1.0f;
 				__try { if (game::addr_g_ReplayTimeMs) clock = *(float*)game::addr_g_ReplayTimeMs; }
 				__except (EXCEPTION_EXECUTE_HANDLER) {}
 
+				// RE+'s own position in the frame, and whether the game is still
+				// presenting at all: a heartbeat that has stopped means nothing is
+				// reaching the screen, and the freeze is below RE+, not in it.
+				const uint32_t beatA = fxcapture::heartbeat();
+				Sleep(1000);
+				const uint32_t beatB = fxcapture::heartbeat();
+
 				logger::write("info",
 					"render: !! no progress for %lus at frame %d (clip clock %.3f ms) - "
-					"the game looks frozen. %s %s",
+					"the game looks frozen. step=%d sample=%d flush=%d capture=%d "
+					"lastDone=%d fixedStep=%d presents/s=%u. %s %s",
 					(unsigned long)((now - since) / 1000), f, clock,
-					ok ? "Hang dump written:" : "Could not write a hang dump to", path);
+					(int)s_step, s_slideSample, (int)s_slideFlush, (int)s_slideCapture,
+					(int)fxcapture::lastDone(), (int)s_fxStep, beatB - beatA,
+					ok ? "Hang dumps written:" : "Could not write a hang dump to", path);
 			}
 			return 0;
 		}
