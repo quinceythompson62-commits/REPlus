@@ -30,10 +30,21 @@ static const std::string& LogPath()
 
 void logger::init()
 {
-	if (std::filesystem::exists(LogPath().c_str()))
-	{
-		std::filesystem::remove(LogPath().c_str());
-	}
+	// Never throw from here: this runs inside DllMain, and an exception escaping
+	// DllMain makes Windows refuse to load the mod at all ("failed to load").
+	// That happened whenever another program had the log open at launch - e.g. a
+	// tool polling it for render progress - because remove() hit a sharing
+	// violation. If the old log can't be deleted, empty it instead; if that
+	// fails too, just keep appending to it.
+	std::error_code ec;
+	if (!std::filesystem::exists(LogPath(), ec))
+		return;
+	if (std::filesystem::remove(LogPath(), ec) && !ec)
+		return;
+	HANDLE h = CreateFileA(LogPath().c_str(), GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+		nullptr, TRUNCATE_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+	if (h != INVALID_HANDLE_VALUE)
+		CloseHandle(h);
 }
 
 void logger::vwrite(const char* type, const char* msg, va_list args)

@@ -1,4 +1,5 @@
-﻿// This file is part of RockstarEditorPlus.
+﻿#include <exception>
+// This file is part of RockstarEditorPlus.
 // Copyright (C) 2026 CoreFX (crxhvrd@proton.me)
 // SPDX-License-Identifier: GPL-3.0-only
 // RockstarEditorPlus is free software: you can redistribute it and/or modify it
@@ -560,7 +561,7 @@ static DWORD WINAPI FiveMRegisterThread(LPVOID)
 	return 0;
 }
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
+static BOOL DllMainImpl(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
@@ -657,6 +658,25 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 			logger::write("info", "RockstarEditorPlus: GetSystemTimeAsFileTime hook failed (%lu)",
 				GetLastError());
 		}
+	}
+	return TRUE;
+}
+
+// No exception may leave DllMain: Windows treats it as a failed load and the
+// game starts without the mod. Catch everything, note it, and stay loaded.
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
+{
+	try
+	{
+		return DllMainImpl(hModule, dwReason, lpReserved);
+	}
+	catch (const std::exception& e)
+	{
+		try { logger::write("error", "RockstarEditorPlus: startup error caught (%s)", e.what()); } catch (...) {}
+	}
+	catch (...)
+	{
+		try { logger::write("error", "RockstarEditorPlus: unknown startup error caught"); } catch (...) {}
 	}
 	return TRUE;
 }
