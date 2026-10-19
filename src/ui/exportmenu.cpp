@@ -166,14 +166,24 @@ namespace exportmenu
 		inline int clampi(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
 		// --- Quick Setup ------------------------------------------------------
-		struct QuickPreset { const char* name; int samples; float shutter; };
+		// fps 0 = leave the Frame Rate row alone.
+		//
+		// The slow-motion presets trade samples for frames. Render time is about
+		// frames x samples, and a frame at 120fps covers a fifth of the time a
+		// 24fps frame does, so it needs a fifth of the samples for the same blur
+		// quality: 120 x 8 = 960 captures a second, the same as Instagram at 30fps.
+		// Shot at 120 and played at 24 in the edit it is 5x slow motion, or any
+		// speed ramp in between, with real frames instead of interpolated ones.
+		struct QuickPreset { const char* name; int samples; float shutter; float fps; };
 		// Index 0 is "Custom" - the label for settings matching none of them.
 		const QuickPreset kQuick[] = {
-			{ "Custom",      0,  0.0f },
-			{ "Draft",       8,  0.5f },
-			{ "Instagram",  32,  0.5f },
-			{ "Final",      64,  0.5f },
-			{ "Max",       128,  0.5f },
+			{ "Custom",       0,  0.0f,   0.0f },
+			{ "Draft",        8,  0.5f,   0.0f },
+			{ "Instagram",   32,  0.5f,   0.0f },
+			{ "Final",       64,  0.5f,   0.0f },
+			{ "Max",        128,  0.5f,   0.0f },
+			{ "Slow-mo 60",  16,  0.5f,  60.0f },
+			{ "Slow-mo 120",  8,  0.5f, 120.0f },
 		};
 		constexpr int kQuickCount = (int)(sizeof(kQuick) / sizeof(*kQuick));
 
@@ -183,7 +193,8 @@ namespace exportmenu
 			if (c.renderDof || c.renderAudio || c.renderCaptureMode != 1) return 0;
 			for (int i = 1; i < kQuickCount; ++i)
 				if (c.renderSamples == kQuick[i].samples &&
-				    fabsf(c.renderShutter - kQuick[i].shutter) < 0.01f)
+				    fabsf(c.renderShutter - kQuick[i].shutter) < 0.01f &&
+				    (kQuick[i].fps <= 0.0f ? c.renderFps < 59.0f : fabsf(c.renderFps - kQuick[i].fps) < 0.5f))
 					return i;
 			return 0;
 		}
@@ -563,7 +574,12 @@ namespace exportmenu
 				       "Instagram: 32 samples at a 180 degree shutter. The everyday one.\n"
 				       "Final: 64 samples, the full-quality master.\n"
 				       "Max: 128 samples, for slow, detailed shots.\n"
-				       "All four switch Depth of Field and Audio OFF and use Sliding.\n\n"
+				       "Slow-mo 60 / Slow-mo 120: renders 60 or 120 frames a second with "
+				       "fewer samples each, so it costs about the same as Instagram at "
+				       "30fps. Play it at 24 in your edit for 2.5x / 5x slow motion, or "
+				       "speed-ramp it to the beat.\n"
+				       "All of them switch Depth of Field and Audio OFF and use Sliding. "
+				       "The first four set Frame Rate back to 24 if it was 60 or more.\n\n"
 				       "The time shown is an estimate for the whole project, based on how "
 				       "fast your last render actually ran. It appears after one render "
 				       "has finished. Change any row below and this reads Custom.\n\n"
@@ -938,6 +954,18 @@ namespace exportmenu
 				c.renderDof         = false;
 				c.renderAudio       = false;
 				c.renderCaptureMode = 1;
+				if (p.fps > 0.0f)
+				{
+					c.renderFps = p.fps;
+					c.writeRenderFloat("RenderFps", c.renderFps);
+				}
+				else if (c.renderFps >= 59.0f)
+				{
+					// Leaving a slow-mo preset: back to a normal rate, or "Instagram"
+					// would quietly render five times the frames.
+					c.renderFps = 24.0f;
+					c.writeRenderFloat("RenderFps", c.renderFps);
+				}
 				c.writeRenderInt("RenderSamples", c.renderSamples);
 				c.writeRenderFloat("RenderShutter", c.renderShutter);
 				c.writeRenderBool("RenderDepthOfField", false);
