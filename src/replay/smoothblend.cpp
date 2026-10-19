@@ -1528,6 +1528,68 @@ namespace smoothblend
 	//
 	// Everything is still a pure function of replay time.
 	// -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
+	// The clock the shake runs on.
+	//
+	// The shake is a pure function of replay time, which is exactly right for a
+	// render: every frame is placed at a precise time. During interactive
+	// PLAYBACK in the editor, though, the replay clock does not advance
+	// smoothly - it steps with the recorded frames and nudges itself for audio
+	// sync. A camera path never shows that (it moves slowly), but a shake turns
+	// time error straight into angle: a 9 Hz component of 1 degree swings about
+	// 1.7 degrees for 30 ms of clock error. That is the "camera man having a
+	// seizure" on top of the shake, live, while the export looked fine.
+	//
+	// So outside a render the shake reads a smoothed copy of the clock: it
+	// advances on wall time at the replay's measured rate (slow-motion markers
+	// included), is pulled gently toward the real replay time, and snaps to it
+	// on a seek, a scrub or a long stall. Paused, the rate decays to zero and it
+	// settles exactly on the paused frame. Rendering bypasses all of this.
+	// -------------------------------------------------------------------------
+	static float shakeClock(float now)
+	{
+		static bool   s_init = false;
+		static double s_t = 0.0, s_rate = 1.0, s_wallPrev = 0.0;
+		static float  s_nowPrev = 0.0f;
+
+		if (render::active()) { s_init = false; return now; }
+
+		LARGE_INTEGER f, c;
+		QueryPerformanceFrequency(&f);
+		QueryPerformanceCounter(&c);
+		const double wall = (double)c.QuadPart * 1000.0 / (double)f.QuadPart;   // ms
+
+		if (!s_init)
+		{
+			s_init = true; s_t = now; s_rate = 1.0; s_wallPrev = wall; s_nowPrev = now;
+			return now;
+		}
+
+		const double dWall = wall - s_wallPrev;
+		const double dNow  = (double)now - (double)s_nowPrev;
+		s_wallPrev = wall; s_nowPrev = now;
+
+		// A seek, a scrub, a reload or a hitch: no smoothing across it.
+		if (dWall <= 0.0 || dWall > 250.0 || fabs((double)now - s_t) > 250.0 || dNow < -1.0)
+		{
+			s_t = now; s_rate = (dWall > 0.0 && dWall <= 250.0 && dNow >= 0.0) ? dNow / dWall : 0.0;
+			return now;
+		}
+
+		// Replay-time per wall-time, averaged over ~0.5 s: 1 at normal speed,
+		// 0.25 on a quarter-speed marker, 0 while paused.
+		const double inst = dNow / dWall;
+		const double ka = 1.0 - exp(-dWall / 500.0);
+		s_rate += (inst - s_rate) * ka;
+		if (s_rate < 0.0) s_rate = 0.0;
+
+		s_t += s_rate * dWall;
+		// Pull toward the true clock (~0.3 s), so it can never drift away.
+		const double kp = 1.0 - exp(-dWall / 300.0);
+		s_t += ((double)now - s_t) * kp;
+		return (float)s_t;
+	}
+
 	static void applyShake(void* self, void* storage, int currIdx)
 	{
 		using namespace rsettings;
@@ -1536,7 +1598,7 @@ namespace smoothblend
 		if (!marker) return;
 
 		const Config& cfg = Config::get();
-		const float now = *(float*)game::addr_g_ReplayTimeMs;
+		const float now = shakeClock(*(float*)game::addr_g_ReplayTimeMs);
 
 		// NEGATIVE means "not known this tick", which is not the same as zero.
 		// Zero would tell the motion gate the camera is parked and fade the
