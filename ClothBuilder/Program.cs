@@ -280,9 +280,22 @@ namespace ClothBuilder
             {
                 try
                 {
-                    if (it.Textures.Count == 0) throw new Exception("no textures");
                     if (it.Textures.Count > 26) it.Textures = it.Textures.Take(26).ToList();
                     cache[it.Ydd] = ToGen9(it.Ydd, out _);
+                    if (it.Textures.Count == 0)
+                    {
+                        // drawable carries its textures embedded: make a ytd out of them
+                        var y = new YddFile(); y.Load(cache[it.Ydd]);
+                        var emb = y.Drawables?.SelectMany(d => d.ShaderGroup?.TextureDictionary?.Textures?.data_items ?? new Texture[0]).ToList();
+                        if (emb == null || emb.Count == 0) throw new Exception("no textures");
+                        var td = new TextureDictionary();
+                        td.BuildFromTextureList(emb);
+                        var ytd = new YtdFile { TextureDict = td };
+                        var key = it.Ydd + "#embedded.ytd";
+                        cache[key] = ytd.Save();
+                        it.Textures.Add(key);
+                        Console.WriteLine($"{it.Label}: built ytd from {emb.Count} embedded textures");
+                    }
                     foreach (var t in it.Textures) if (!cache.ContainsKey(t)) cache[t] = ToGen9(t, out _);
                     good.Add(it);
                 }
