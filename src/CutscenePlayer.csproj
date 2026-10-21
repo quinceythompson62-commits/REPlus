@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>CutscenePlayer</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>11.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ScriptHookVDotNet3"><HintPath>..\refs\ScriptHookVDotNet3.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="LemonUI.SHVDN3"><HintPath>..\refs\LemonUI.SHVDN3.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

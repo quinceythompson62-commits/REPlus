@@ -14,6 +14,12 @@ jobs:
           New-Item -ItemType Directory out | Out-Null
           Get-ChildItem in -Filter *.dll | ForEach-Object { ilspycmd $_.FullName -o (Join-Path out $_.BaseName) -p }
           Get-ChildItem out -Recurse | Format-Table FullName, Length
+      - name: Build patched CutscenePlayer
+        shell: pwsh
+        run: |
+          dotnet build src/CutscenePlayer.csproj -c Release -o out/CutscenePlayer_fixed 2>&1 | Tee-Object build.log
+          if ($LASTEXITCODE -ne 0) { Copy-Item build.log out/build_errors.log }
+          exit 0
       - name: Publish
         shell: pwsh
         run: |
