@@ -863,63 +863,63 @@ public class Class1 : Script
 	{
 		if (MP.Equals("MP_1"))
 		{
-			CutscenePed1Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0));
-			CutscenePed1Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1));
-			CutscenePed1Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2));
-			CutscenePed1Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3));
-			CutscenePed1Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4));
-			CutscenePed1Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5));
-			CutscenePed1Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6));
-			CutscenePed1Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7));
-			CutscenePed1Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8));
-			CutscenePed1Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9));
-			CutscenePed1Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10));
-			CutscenePed1Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11));
+			CutscenePed1Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)));
+			CutscenePed1Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)));
+			CutscenePed1Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)));
+			CutscenePed1Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)));
+			CutscenePed1Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)));
+			CutscenePed1Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)));
+			CutscenePed1Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)));
+			CutscenePed1Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)));
+			CutscenePed1Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)));
+			CutscenePed1Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)));
+			CutscenePed1Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)));
+			CutscenePed1Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)));
 		}
 		if (MP.Equals("MP_2"))
 		{
-			CutscenePed2Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0));
-			CutscenePed2Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1));
-			CutscenePed2Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2));
-			CutscenePed2Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3));
-			CutscenePed2Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4));
-			CutscenePed2Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5));
-			CutscenePed2Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6));
-			CutscenePed2Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7));
-			CutscenePed2Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8));
-			CutscenePed2Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9));
-			CutscenePed2Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10));
-			CutscenePed2Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11));
+			CutscenePed2Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)));
+			CutscenePed2Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)));
+			CutscenePed2Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)));
+			CutscenePed2Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)));
+			CutscenePed2Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)));
+			CutscenePed2Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)));
+			CutscenePed2Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)));
+			CutscenePed2Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)));
+			CutscenePed2Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)));
+			CutscenePed2Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)));
+			CutscenePed2Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)));
+			CutscenePed2Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)));
 		}
 		if (MP.Equals("MP_3"))
 		{
-			CutscenePed3Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0));
-			CutscenePed3Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1));
-			CutscenePed3Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2));
-			CutscenePed3Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3));
-			CutscenePed3Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4));
-			CutscenePed3Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5));
-			CutscenePed3Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6));
-			CutscenePed3Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7));
-			CutscenePed3Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8));
-			CutscenePed3Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9));
-			CutscenePed3Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10));
-			CutscenePed3Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11));
+			CutscenePed3Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)));
+			CutscenePed3Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)));
+			CutscenePed3Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)));
+			CutscenePed3Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)));
+			CutscenePed3Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)));
+			CutscenePed3Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)));
+			CutscenePed3Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)));
+			CutscenePed3Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)));
+			CutscenePed3Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)));
+			CutscenePed3Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)));
+			CutscenePed3Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)));
+			CutscenePed3Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)));
 		}
 		if (MP.Equals("MP_4"))
 		{
-			CutscenePed4Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0));
-			CutscenePed4Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1));
-			CutscenePed4Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2));
-			CutscenePed4Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3));
-			CutscenePed4Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4));
-			CutscenePed4Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5));
-			CutscenePed4Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6));
-			CutscenePed4Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7));
-			CutscenePed4Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8));
-			CutscenePed4Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9));
-			CutscenePed4Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10));
-			CutscenePed4Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11)) + "_" + Function.Call<int>((Hash)334205219021784294L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11));
+			CutscenePed4Comp[0] = "0_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)));
+			CutscenePed4Comp[1] = "1_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)));
+			CutscenePed4Comp[2] = "2_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)));
+			CutscenePed4Comp[3] = "3_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)));
+			CutscenePed4Comp[4] = "4_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)));
+			CutscenePed4Comp[5] = "5_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)));
+			CutscenePed4Comp[6] = "6_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)));
+			CutscenePed4Comp[7] = "7_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)));
+			CutscenePed4Comp[8] = "8_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)));
+			CutscenePed4Comp[9] = "9_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)));
+			CutscenePed4Comp[10] = "10_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)));
+			CutscenePed4Comp[11] = "11_" + Function.Call<int>((Hash)7490462606036423932L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11))) + "_" + Function.Call<int>((Hash)334205219021784294L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)));
 		}
 	}
 
@@ -928,118 +928,118 @@ public class Class1 : Script
 		if (MP.Equals("MP_1"))
 		{
 			string[] array = CutscenePed1Comp[0].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[1].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[2].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[3].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[4].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[5].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[6].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[7].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[8].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[9].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[10].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 			array = CutscenePed1Comp[11].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11), InputArgument.op_Implicit(int.Parse(array[1])), InputArgument.op_Implicit(int.Parse(array[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)), ((InputArgument)(int.Parse(array[1]))), ((InputArgument)(int.Parse(array[2]))), ((InputArgument)(1)));
 		}
 		if (MP.Equals("MP_2"))
 		{
 			string[] array2 = CutscenePed2Comp[0].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[1].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[2].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[3].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[4].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[5].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[6].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[7].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[8].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[9].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[10].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 			array2 = CutscenePed2Comp[11].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11), InputArgument.op_Implicit(int.Parse(array2[1])), InputArgument.op_Implicit(int.Parse(array2[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)), ((InputArgument)(int.Parse(array2[1]))), ((InputArgument)(int.Parse(array2[2]))), ((InputArgument)(1)));
 		}
 		if (MP.Equals("MP_3"))
 		{
 			string[] array3 = CutscenePed2Comp[0].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[1].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[2].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[3].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[4].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[5].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[6].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[7].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[8].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[9].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[10].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 			array3 = CutscenePed3Comp[11].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11), InputArgument.op_Implicit(int.Parse(array3[1])), InputArgument.op_Implicit(int.Parse(array3[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)), ((InputArgument)(int.Parse(array3[1]))), ((InputArgument)(int.Parse(array3[2]))), ((InputArgument)(1)));
 		}
 		if (MP.Equals("MP_4"))
 		{
 			string[] array4 = CutscenePed1Comp[0].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(0), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(0)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[1].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(1), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(1)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[2].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(2), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(2)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[3].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(3), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(3)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[4].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(4), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(4)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[5].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(5), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(5)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[6].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(6), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(6)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[7].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(7), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(7)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[8].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(8), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(8)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[9].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(9), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(9)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[10].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(10), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(10)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 			array4 = CutscenePed4Comp[11].Split('_');
-			Function.Call((Hash)2750315038012726912L, Entity.op_Implicit((Entity)(object)NonCutscene), InputArgument.op_Implicit(11), InputArgument.op_Implicit(int.Parse(array4[1])), InputArgument.op_Implicit(int.Parse(array4[2])), InputArgument.op_Implicit(1));
+			Function.Call((Hash)2750315038012726912L, ((InputArgument)((Entity)(object)NonCutscene)), ((InputArgument)(11)), ((InputArgument)(int.Parse(array4[1]))), ((InputArgument)(int.Parse(array4[2]))), ((InputArgument)(1)));
 		}
 	}
 
 	public static string LoadCutsceneWithFlag(string cutscene, int playbackflag)
 	{
-		while (!Function.Call<bool>(unchecked((Hash)(-4206552754506042567L)), InputArgument.op_Implicit(cutscene)))
+		while (!Function.Call<bool>(unchecked((Hash)(-4206552754506042567L)), ((InputArgument)(cutscene))))
 		{
-			Function.Call(unchecked((Hash)(-4450153564967225972L)), InputArgument.op_Implicit(cutscene), InputArgument.op_Implicit(playbackflag), InputArgument.op_Implicit(8));
+			Function.Call(unchecked((Hash)(-4450153564967225972L)), ((InputArgument)(cutscene)), ((InputArgument)(playbackflag)), ((InputArgument)(8)));
 			Script.Yield();
 		}
 		return cutscene;
@@ -1047,9 +1047,9 @@ public class Class1 : Script
 
 	public static string LoadCutscene(string cutscene)
 	{
-		while (!Function.Call<bool>(unchecked((Hash)(-4206552754506042567L)), InputArgument.op_Implicit(cutscene)))
+		while (!Function.Call<bool>(unchecked((Hash)(-4206552754506042567L)), ((InputArgument)(cutscene))))
 		{
-			Function.Call((Hash)8828871934635515401L, InputArgument.op_Implicit(cutscene), InputArgument.op_Implicit(8));
+			Function.Call((Hash)8828871934635515401L, ((InputArgument)(cutscene)), ((InputArgument)(8)));
 			Script.Yield();
 		}
 		return cutscene;
@@ -1078,17 +1078,17 @@ public class Class1 : Script
 			Function.Call((Hash)511811220243728563L);
 		}
 		PlayerModelSetBack();
-		if (PlayerModel == Model.op_Implicit((PedHash)(-1692214353)))
+		if (PlayerModel == new Model(-1692214353))
 		{
-			SetBack(Model.op_Implicit(PlayerModel));
+			SetBack((PedHash)PlayerModel.Hash);
 		}
-		if (PlayerModel == Model.op_Implicit((PedHash)(-1686040670)))
+		if (PlayerModel == new Model(-1686040670))
 		{
-			SetBack(Model.op_Implicit(PlayerModel));
+			SetBack((PedHash)PlayerModel.Hash);
 		}
-		if (PlayerModel == Model.op_Implicit((PedHash)225514697))
+		if (PlayerModel == new Model(225514697)
 		{
-			SetBack(Model.op_Implicit(PlayerModel));
+			SetBack((PedHash)PlayerModel.Hash);
 		}
 		if (TeleportBacktoStartPos)
 		{
@@ -1126,22 +1126,22 @@ public class Class1 : Script
 		{
 			Ped nonCutscene = NonCutscene2;
 			PedGroup pedGroup = Game.Player.Character.PedGroup;
-			Function.Call(unchecked((Hash)(-6974808092771143243L)), Entity.op_Implicit((Entity)(object)nonCutscene), PedGroup.op_Implicit(pedGroup));
-			Function.Call(unchecked((Hash)(-4079649877180351064L)), Entity.op_Implicit((Entity)(object)nonCutscene), InputArgument.op_Implicit(100));
+			Function.Call(unchecked((Hash)(-6974808092771143243L)), ((InputArgument)((Entity)(object)nonCutscene)), ((InputArgument)(pedGroup)));
+			Function.Call(unchecked((Hash)(-4079649877180351064L)), ((InputArgument)((Entity)(object)nonCutscene)), ((InputArgument)(100)));
 		}
 		if ((Entity)(object)NonCutscene3 != (Entity)null)
 		{
 			Ped nonCutscene2 = NonCutscene3;
 			PedGroup pedGroup2 = Game.Player.Character.PedGroup;
-			Function.Call(unchecked((Hash)(-6974808092771143243L)), Entity.op_Implicit((Entity)(object)nonCutscene2), PedGroup.op_Implicit(pedGroup2));
-			Function.Call(unchecked((Hash)(-4079649877180351064L)), Entity.op_Implicit((Entity)(object)nonCutscene2), InputArgument.op_Implicit(100));
+			Function.Call(unchecked((Hash)(-6974808092771143243L)), ((InputArgument)((Entity)(object)nonCutscene2)), ((InputArgument)(pedGroup2)));
+			Function.Call(unchecked((Hash)(-4079649877180351064L)), ((InputArgument)((Entity)(object)nonCutscene2)), ((InputArgument)(100)));
 		}
 		if ((Entity)(object)NonCutscene4 != (Entity)null)
 		{
 			Ped nonCutscene3 = NonCutscene4;
 			PedGroup pedGroup3 = Game.Player.Character.PedGroup;
-			Function.Call(unchecked((Hash)(-6974808092771143243L)), Entity.op_Implicit((Entity)(object)nonCutscene3), PedGroup.op_Implicit(pedGroup3));
-			Function.Call(unchecked((Hash)(-4079649877180351064L)), Entity.op_Implicit((Entity)(object)nonCutscene3), InputArgument.op_Implicit(100));
+			Function.Call(unchecked((Hash)(-6974808092771143243L)), ((InputArgument)((Entity)(object)nonCutscene3)), ((InputArgument)(pedGroup3)));
+			Function.Call(unchecked((Hash)(-4079649877180351064L)), ((InputArgument)((Entity)(object)nonCutscene3)), ((InputArgument)(100)));
 		}
 		Function.Call(unchecked((Hash)(-3305433416267445730L)));
 		PlayingCutscene = false;
@@ -1212,10 +1212,10 @@ public class Class1 : Script
 			Notification.Show("~y~Cutscene Player~w~: a cutscene is already playing.", false);
 			return false;
 		}
-		Function.Call((Hash)8828871934635515401L, InputArgument.op_Implicit(name), InputArgument.op_Implicit(8));
+		Function.Call((Hash)8828871934635515401L, ((InputArgument)(name)), ((InputArgument)(8)));
 		Notification.Show("~b~Cutscene Player~w~: loading " + name + "...", false);
 		int start = Game.GameTime;
-		while (!Function.Call<bool>((Hash)2489713879041514556L, InputArgument.op_Implicit(name)))
+		while (!Function.Call<bool>((Hash)2489713879041514556L, ((InputArgument)(name))))
 		{
 			if (Game.GameTime - start > 30000)
 			{
@@ -1270,23 +1270,23 @@ public class Class1 : Script
 			return;
 		}
 		StartPos = ((Entity)Game.Player.Character).Position;
-		int num = Function.Call<int>(unchecked((Hash)(-1053031750656612747L)), Entity.op_Implicit((Entity)(object)Game.Player.Character));
-		NonCutscene2 = Function.Call<Ped>((Hash)5856179815557885335L, InputArgument.op_Implicit(num), InputArgument.op_Implicit(0));
-		NonCutscene3 = Function.Call<Ped>((Hash)5856179815557885335L, InputArgument.op_Implicit(num), InputArgument.op_Implicit(1));
-		NonCutscene4 = Function.Call<Ped>((Hash)5856179815557885335L, InputArgument.op_Implicit(num), InputArgument.op_Implicit(2));
+		int num = Function.Call<int>(unchecked((Hash)(-1053031750656612747L)), ((InputArgument)((Entity)(object)Game.Player.Character)));
+		NonCutscene2 = Function.Call<Ped>((Hash)5856179815557885335L, ((InputArgument)(num)), ((InputArgument)(0)));
+		NonCutscene3 = Function.Call<Ped>((Hash)5856179815557885335L, ((InputArgument)(num)), ((InputArgument)(1)));
+		NonCutscene4 = Function.Call<Ped>((Hash)5856179815557885335L, ((InputArgument)(num)), ((InputArgument)(2)));
 		PlayerModel = ((Entity)Game.Player.Character).Model;
 		PlayerModelSet();
 		if ((Entity)(object)NonCutscene2 != (Entity)null)
 		{
-			Function.Call(unchecked((Hash)(-1336442639748928574L)), Entity.op_Implicit((Entity)(object)NonCutscene2));
+			Function.Call(unchecked((Hash)(-1336442639748928574L)), ((InputArgument)((Entity)(object)NonCutscene2)));
 		}
 		if ((Entity)(object)NonCutscene3 != (Entity)null)
 		{
-			Function.Call(unchecked((Hash)(-1336442639748928574L)), Entity.op_Implicit((Entity)(object)NonCutscene3));
+			Function.Call(unchecked((Hash)(-1336442639748928574L)), ((InputArgument)((Entity)(object)NonCutscene3)));
 		}
 		if ((Entity)(object)NonCutscene4 != (Entity)null)
 		{
-			Function.Call(unchecked((Hash)(-1336442639748928574L)), Entity.op_Implicit((Entity)(object)NonCutscene4));
+			Function.Call(unchecked((Hash)(-1336442639748928574L)), ((InputArgument)((Entity)(object)NonCutscene4)));
 		}
 		if (!PlayingSPCutscene)
 		{
@@ -1294,7 +1294,7 @@ public class Class1 : Script
 			{
 				CutsenePed1 = Game.Player.Character;
 				SetPedOutfitCutscene("MP_1", Game.Player.Character);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("MP_1"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("MP_1")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			if (RepalceMpMFwithPlayer)
 			{
@@ -1302,19 +1302,19 @@ public class Class1 : Script
 				if ((int)Game.Player.Character.Gender == 0)
 				{
 					SetPedOutfitCutscene("MP_Male_Character", Game.Player.Character);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("MP_Male_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("MP_Male_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					Ped val = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(0f, 0f, 0f), 0f);
 					((Entity)val).IsVisible = false;
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val), InputArgument.op_Implicit("MP_Female_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val)), ((InputArgument)("MP_Female_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					NonMainChars.Add(val);
 				}
 				else
 				{
 					SetPedOutfitCutscene("MP_Female_Character", Game.Player.Character);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("MP_Female_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("MP_Female_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					Ped val2 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(0f, 0f, 0f), 0f);
 					((Entity)val2).IsVisible = false;
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val2), InputArgument.op_Implicit("MP_Male_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val2)), ((InputArgument)("MP_Male_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					NonMainChars.Add(val2);
 				}
 			}
@@ -1323,39 +1323,39 @@ public class Class1 : Script
 				Ped val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_1"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_1")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_5"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_5")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_6"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_6")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_7"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_7")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 				((Entity)val3).IsVisible = false;
 				NonMainChars.Add(val3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_8"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_8")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			if ((Entity)(object)Game.Player.Character.LastVehicle != (Entity)null)
 			{
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)Game.Player.Character.LastVehicle), InputArgument.op_Implicit("MPH_Car"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)Game.Player.Character.LastVehicle)), ((InputArgument)("MPH_Car")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)Game.Player.Character.LastVehicle).IsVisible = false;
 			}
 			if (RepalceMp2)
@@ -1367,12 +1367,12 @@ public class Class1 : Script
 				if ((Entity)(object)NonCutscene2 != (Entity)null)
 				{
 					SetPedOutfitCutscene("MP_2", NonCutscene2);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene2), InputArgument.op_Implicit("MP_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene2)), ((InputArgument)("MP_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				}
 				else
 				{
 					CutsenePed2 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed2), InputArgument.op_Implicit("MP_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed2)), ((InputArgument)("MP_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					((Entity)CutsenePed2).IsVisible = false;
 					Notification.Show("Creating Cutscene Ped 2", false);
 				}
@@ -1380,7 +1380,7 @@ public class Class1 : Script
 			else
 			{
 				CutsenePed2 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed2), InputArgument.op_Implicit("MP_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed2)), ((InputArgument)("MP_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)CutsenePed2).IsVisible = false;
 				Notification.Show("Creating Cutscene Ped 2", false);
 			}
@@ -1393,19 +1393,19 @@ public class Class1 : Script
 				if ((Entity)(object)NonCutscene3 != (Entity)null)
 				{
 					SetPedOutfitCutscene("MP_3", NonCutscene3);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene3), InputArgument.op_Implicit("MP_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene3)), ((InputArgument)("MP_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				}
 				else
 				{
 					CutsenePed3 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed3), InputArgument.op_Implicit("MP_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed3)), ((InputArgument)("MP_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					((Entity)CutsenePed3).IsVisible = false;
 				}
 			}
 			else
 			{
 				CutsenePed3 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed3), InputArgument.op_Implicit("MP_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed3)), ((InputArgument)("MP_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)CutsenePed3).IsVisible = false;
 			}
 			if (RepalceMp4)
@@ -1417,19 +1417,19 @@ public class Class1 : Script
 				if ((Entity)(object)NonCutscene4 != (Entity)null)
 				{
 					SetPedOutfitCutscene("MP_4", NonCutscene4);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene4), InputArgument.op_Implicit("MP_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene4)), ((InputArgument)("MP_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				}
 				else
 				{
 					CutsenePed4 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-					Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed4), InputArgument.op_Implicit("MP_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+					Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed4)), ((InputArgument)("MP_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 					((Entity)CutsenePed4).IsVisible = false;
 				}
 			}
 			else
 			{
 				CutsenePed4 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed4), InputArgument.op_Implicit("MP_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed4)), ((InputArgument)("MP_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)CutsenePed4).IsVisible = false;
 			}
 		}
@@ -1439,51 +1439,51 @@ public class Class1 : Script
 			{
 				CutsenePed1 = Game.Player.Character;
 				SetPedOutfitCutscene("Franklin", Game.Player.Character);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("Franklin"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("Franklin")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			if (RepalceMp2)
 			{
 				CutsenePed1 = Game.Player.Character;
 				SetPedOutfitCutscene("Michael", Game.Player.Character);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("Michael"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("Michael")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			if (RepalceMp3)
 			{
 				CutsenePed1 = Game.Player.Character;
 				SetPedOutfitCutscene("Trevor", Game.Player.Character);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("Franklin"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("Franklin")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 		}
 		if ((Entity)(object)NonCutscene2 != (Entity)null && NonCutscene2.Exists())
 		{
 			((Entity)NonCutscene2).Position = ((Entity)Game.Player.Character).Position;
 			Notification.Show("BodyguardA is Active", false);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene2), InputArgument.op_Implicit("MP_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene2)), ((InputArgument)("MP_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 		}
 		if ((Entity)(object)NonCutscene3 != (Entity)null && NonCutscene3.Exists())
 		{
 			((Entity)NonCutscene3).Position = ((Entity)Game.Player.Character).Position;
 			Notification.Show("BodyguardB is Active", false);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene3), InputArgument.op_Implicit("MP_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene3)), ((InputArgument)("MP_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 		}
 		if ((Entity)(object)NonCutscene4 != (Entity)null && NonCutscene4.Exists())
 		{
 			((Entity)NonCutscene4).Position = ((Entity)Game.Player.Character).Position;
 			Notification.Show("BodyguardC is Active", false);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene4), InputArgument.op_Implicit("MP_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene4)), ((InputArgument)("MP_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 		}
-		Function.Call((Hash)1760164965717704571L, InputArgument.op_Implicit(cutscene));
+		Function.Call((Hash)1760164965717704571L, ((InputArgument)(cutscene)));
 		if (RecordCutscene)
 		{
-			Function.Call(unchecked((Hash)(-4347046765538399103L)), InputArgument.op_Implicit(1));
+			Function.Call(unchecked((Hash)(-4347046765538399103L)), ((InputArgument)(1)));
 		}
 		if (!SetCutsceneFadeout)
 		{
-			Function.Call(unchecked((Hash)(-9181728881222301740L)), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false));
+			Function.Call(unchecked((Hash)(-9181728881222301740L)), ((InputArgument)(false)), ((InputArgument)(false)), ((InputArgument)(false)), ((InputArgument)(false)));
 		}
 		if (SetCutsceneFadeout)
 		{
-			Function.Call(unchecked((Hash)(-9181728881222301740L)), InputArgument.op_Implicit(true), InputArgument.op_Implicit(true), InputArgument.op_Implicit(true), InputArgument.op_Implicit(true));
+			Function.Call(unchecked((Hash)(-9181728881222301740L)), ((InputArgument)(true)), ((InputArgument)(true)), ((InputArgument)(true)), ((InputArgument)(true)));
 		}
 		Script.Wait(100);
 		PlayingCutscene = true;
@@ -1555,17 +1555,17 @@ public class Class1 : Script
 		}
 		CurrentPlayingCutscene = CurrentCutsene;
 		StartPos = ((Entity)Game.Player.Character).Position;
-		int num = Function.Call<int>(unchecked((Hash)(-1053031750656612747L)), Entity.op_Implicit((Entity)(object)Game.Player.Character));
-		NonCutscene2 = Function.Call<Ped>((Hash)5856179815557885335L, InputArgument.op_Implicit(num), InputArgument.op_Implicit(0));
-		NonCutscene3 = Function.Call<Ped>((Hash)5856179815557885335L, InputArgument.op_Implicit(num), InputArgument.op_Implicit(1));
-		NonCutscene4 = Function.Call<Ped>((Hash)5856179815557885335L, InputArgument.op_Implicit(num), InputArgument.op_Implicit(2));
+		int num = Function.Call<int>(unchecked((Hash)(-1053031750656612747L)), ((InputArgument)((Entity)(object)Game.Player.Character)));
+		NonCutscene2 = Function.Call<Ped>((Hash)5856179815557885335L, ((InputArgument)(num)), ((InputArgument)(0)));
+		NonCutscene3 = Function.Call<Ped>((Hash)5856179815557885335L, ((InputArgument)(num)), ((InputArgument)(1)));
+		NonCutscene4 = Function.Call<Ped>((Hash)5856179815557885335L, ((InputArgument)(num)), ((InputArgument)(2)));
 		PlayerModel = ((Entity)Game.Player.Character).Model;
 		PlayerModelSet();
 		if (RepalceMp1)
 		{
 			CutsenePed1 = Game.Player.Character;
 			SetPedOutfitCutscene("MP_1", Game.Player.Character);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("MP_1"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("MP_1")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 		}
 		if (RepalceMpMFwithPlayer)
 		{
@@ -1573,19 +1573,19 @@ public class Class1 : Script
 			if ((int)Game.Player.Character.Gender == 0)
 			{
 				SetPedOutfitCutscene("MP_Male_Character", Game.Player.Character);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("MP_Male_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("MP_Male_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				Ped val = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(0f, 0f, 0f), 0f);
 				((Entity)val).IsVisible = false;
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val), InputArgument.op_Implicit("MP_Female_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val)), ((InputArgument)("MP_Female_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				NonMainChars.Add(val);
 			}
 			else
 			{
 				SetPedOutfitCutscene("MP_Female_Character", Game.Player.Character);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed1), InputArgument.op_Implicit("MP_Female_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed1)), ((InputArgument)("MP_Female_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				Ped val2 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(0f, 0f, 0f), 0f);
 				((Entity)val2).IsVisible = false;
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val2), InputArgument.op_Implicit("MP_Male_Character"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val2)), ((InputArgument)("MP_Male_Character")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				NonMainChars.Add(val2);
 			}
 		}
@@ -1594,35 +1594,35 @@ public class Class1 : Script
 			Ped val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_1"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_1")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_5"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_5")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_6"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_6")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_7"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_7")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			val3 = World.CreateRandomPed(new Vector3(-1188.608f, -1644.653f, 4.373932f));
 			((Entity)val3).IsVisible = false;
 			NonMainChars.Add(val3);
-			Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)val3), InputArgument.op_Implicit("MP_Plane_Passenger_8"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+			Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)val3)), ((InputArgument)("MP_Plane_Passenger_8")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 		}
 		if (RepalceMp2)
 		{
@@ -1634,12 +1634,12 @@ public class Class1 : Script
 			if ((Entity)(object)NonCutscene2 != (Entity)null)
 			{
 				SetPedOutfitCutscene("MP_2", NonCutscene2);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene2), InputArgument.op_Implicit("MP_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene2)), ((InputArgument)("MP_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			else
 			{
 				CutsenePed2 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed2), InputArgument.op_Implicit("MP_2"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed2)), ((InputArgument)("MP_2")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)CutsenePed2).IsVisible = false;
 			}
 		}
@@ -1653,12 +1653,12 @@ public class Class1 : Script
 			if ((Entity)(object)NonCutscene3 != (Entity)null)
 			{
 				SetPedOutfitCutscene("MP_3", NonCutscene3);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene3), InputArgument.op_Implicit("MP_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene3)), ((InputArgument)("MP_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			else
 			{
 				CutsenePed3 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed3), InputArgument.op_Implicit("MP_3"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed3)), ((InputArgument)("MP_3")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)CutsenePed3).IsVisible = false;
 			}
 		}
@@ -1672,39 +1672,39 @@ public class Class1 : Script
 			if ((Entity)(object)NonCutscene4 != (Entity)null)
 			{
 				SetPedOutfitCutscene("MP_4", NonCutscene4);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)NonCutscene4), InputArgument.op_Implicit("MP_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)NonCutscene4)), ((InputArgument)("MP_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 			}
 			else
 			{
 				CutsenePed4 = World.CreatePed(RequestModel((PedHash)1885233650), new Vector3(2488.348f, -267.3637f, -71.64563f), 0f);
-				Function.Call(unchecked((Hash)(-2014203773897555224L)), Entity.op_Implicit((Entity)(object)CutsenePed4), InputArgument.op_Implicit("MP_4"), InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(64));
+				Function.Call(unchecked((Hash)(-2014203773897555224L)), ((InputArgument)((Entity)(object)CutsenePed4)), ((InputArgument)("MP_4")), ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(64)));
 				((Entity)CutsenePed4).IsVisible = false;
 			}
 		}
 		if ((Entity)(object)NonCutscene2 != (Entity)null)
 		{
-			Function.Call(unchecked((Hash)(-1336442639748928574L)), Entity.op_Implicit((Entity)(object)NonCutscene2));
+			Function.Call(unchecked((Hash)(-1336442639748928574L)), ((InputArgument)((Entity)(object)NonCutscene2)));
 		}
 		if ((Entity)(object)NonCutscene3 != (Entity)null)
 		{
-			Function.Call(unchecked((Hash)(-1336442639748928574L)), Entity.op_Implicit((Entity)(object)NonCutscene3));
+			Function.Call(unchecked((Hash)(-1336442639748928574L)), ((InputArgument)((Entity)(object)NonCutscene3)));
 		}
 		if ((Entity)(object)NonCutscene4 != (Entity)null)
 		{
-			Function.Call(unchecked((Hash)(-1336442639748928574L)), Entity.op_Implicit((Entity)(object)NonCutscene4));
+			Function.Call(unchecked((Hash)(-1336442639748928574L)), ((InputArgument)((Entity)(object)NonCutscene4)));
 		}
-		Function.Call((Hash)2061203472233668543L, InputArgument.op_Implicit(X.X), InputArgument.op_Implicit(X.Y), InputArgument.op_Implicit(X.Z - 1f), InputArgument.op_Implicit(0));
+		Function.Call((Hash)2061203472233668543L, ((InputArgument)(X.X)), ((InputArgument)(X.Y)), ((InputArgument)(X.Z - 1f)), ((InputArgument)(0)));
 		if (RecordCutscene)
 		{
-			Function.Call(unchecked((Hash)(-4347046765538399103L)), InputArgument.op_Implicit(1));
+			Function.Call(unchecked((Hash)(-4347046765538399103L)), ((InputArgument)(1)));
 		}
 		if (!SetCutsceneFadeout)
 		{
-			Function.Call(unchecked((Hash)(-9181728881222301740L)), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false));
+			Function.Call(unchecked((Hash)(-9181728881222301740L)), ((InputArgument)(false)), ((InputArgument)(false)), ((InputArgument)(false)), ((InputArgument)(false)));
 		}
 		if (SetCutsceneFadeout)
 		{
-			Function.Call(unchecked((Hash)(-9181728881222301740L)), InputArgument.op_Implicit(true), InputArgument.op_Implicit(true), InputArgument.op_Implicit(true), InputArgument.op_Implicit(true));
+			Function.Call(unchecked((Hash)(-9181728881222301740L)), ((InputArgument)(true)), ((InputArgument)(true)), ((InputArgument)(true)), ((InputArgument)(true)));
 		}
 		Script.Wait(100);
 		PlayingCutscene = true;
@@ -1727,7 +1727,7 @@ public class Class1 : Script
 	{
 		Function.Call(unchecked((Hash)(-3305433416267445730L)));
 		PlayingCutscene = false;
-		Function.Call(unchecked((Hash)(-3454974875737139118L)), InputArgument.op_Implicit(CurrentPlayingCutscene));
+		Function.Call(unchecked((Hash)(-3454974875737139118L)), ((InputArgument)(CurrentPlayingCutscene)));
 	}
 
 	public void LoadIniFile(string iniName)
@@ -2076,7 +2076,7 @@ public class Class1 : Script
 		//IL_005d: Unknown result type (might be due to invalid IL or missing references)
 		OutputArgument val = new OutputArgument();
 		OutputArgument val2 = new OutputArgument();
-		Function.Call<bool>((Hash)3812348786834502901L, InputArgument.op_Implicit(pos.X), InputArgument.op_Implicit(pos.Y), InputArgument.op_Implicit(pos.Z), InputArgument.op_Implicit(val), InputArgument.op_Implicit(val2));
+		Function.Call<bool>((Hash)3812348786834502901L, ((InputArgument)(pos.X)), ((InputArgument)(pos.Y)), ((InputArgument)(pos.Z)), ((InputArgument)(val)), ((InputArgument)(val2)));
 		return new Vector2(val.GetResult<float>(), val2.GetResult<float>());
 	}
 
@@ -2095,13 +2095,13 @@ public class Class1 : Script
 		{
 			a = 255;
 		}
-		screenaspectratio = Function.Call<float>(unchecked((Hash)(-1067213516044759673L)), InputArgument.op_Implicit(true));
-		Function.Call((Hash)2736978246810207435L, InputArgument.op_Implicit("STRING"));
-		Function.Call((Hash)7789129354908300458L, InputArgument.op_Implicit(text));
-		Function.Call(unchecked((Hash)(-4725643803099155390L)), InputArgument.op_Implicit(r), InputArgument.op_Implicit(g), InputArgument.op_Implicit(b), InputArgument.op_Implicit(a));
-		Function.Call((Hash)560759698880214217L, InputArgument.op_Implicit(0f), InputArgument.op_Implicit(scale));
-		Function.Call((Hash)7412968334783068634L, InputArgument.op_Implicit(Font));
-		Function.Call(unchecked((Hash)(-3674552073055540649L)), InputArgument.op_Implicit(GetRatio(x)), InputArgument.op_Implicit(y), InputArgument.op_Implicit(0.1));
+		screenaspectratio = Function.Call<float>(unchecked((Hash)(-1067213516044759673L)), ((InputArgument)(true)));
+		Function.Call((Hash)2736978246810207435L, ((InputArgument)("STRING")));
+		Function.Call((Hash)7789129354908300458L, ((InputArgument)(text)));
+		Function.Call(unchecked((Hash)(-4725643803099155390L)), ((InputArgument)(r)), ((InputArgument)(g)), ((InputArgument)(b)), ((InputArgument)(a)));
+		Function.Call((Hash)560759698880214217L, ((InputArgument)(0f)), ((InputArgument)(scale)));
+		Function.Call((Hash)7412968334783068634L, ((InputArgument)(Font)));
+		Function.Call(unchecked((Hash)(-3674552073055540649L)), ((InputArgument)(GetRatio(x))), ((InputArgument)(y)), ((InputArgument)(0.1)));
 	}
 
 	private unsafe void PlayerModelSet()
@@ -2156,13 +2156,13 @@ public class Class1 : Script
 
 	public static void DisplayHelpTextThisFrame(string helpText, int Shape)
 	{
-		Function.Call(unchecked((Hash)(-8860350453193909743L)), InputArgument.op_Implicit("CELL_EMAIL_BCON"));
+		Function.Call(unchecked((Hash)(-8860350453193909743L)), ((InputArgument)("CELL_EMAIL_BCON")));
 		int num = 99;
 		for (int i = 0; i < helpText.Length; i += num)
 		{
-			Function.Call((Hash)7789129354908300458L, InputArgument.op_Implicit(helpText.Substring(i, Math.Min(num, helpText.Length - i))));
+			Function.Call((Hash)7789129354908300458L, ((InputArgument)(helpText.Substring(i, Math.Min(num, helpText.Length - i)))));
 		}
-		Function.Call((Hash)2562546386151446694L, InputArgument.op_Implicit(0), InputArgument.op_Implicit(0), InputArgument.op_Implicit(1), InputArgument.op_Implicit(Shape));
+		Function.Call((Hash)2562546386151446694L, ((InputArgument)(0)), ((InputArgument)(0)), ((InputArgument)(1)), ((InputArgument)(Shape)));
 	}
 
 	public void OnTick(object sender, EventArgs e)
@@ -2204,20 +2204,20 @@ public class Class1 : Script
 		{
 			Function.Call(unchecked((Hash)(-3305433416267445730L)));
 			Script.Wait(100);
-			Function.Call(unchecked((Hash)(-3454974875737139118L)), InputArgument.op_Implicit(CurrentPlayingCutscene));
+			Function.Call(unchecked((Hash)(-3454974875737139118L)), ((InputArgument)(CurrentPlayingCutscene)));
 			PlayingCutscene = false;
 			EndCutscene();
 			Script.Wait(100);
 		}
 		if (Function.Call<bool>(unchecked((Hash)(-3187737643600379106L))))
 		{
-			Function.Call((Hash)4754298153418524448L, InputArgument.op_Implicit(true));
-			Function.Call(unchecked((Hash)(-9181728881222301740L)), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false), InputArgument.op_Implicit(false));
+			Function.Call((Hash)4754298153418524448L, ((InputArgument)(true)));
+			Function.Call(unchecked((Hash)(-9181728881222301740L)), ((InputArgument)(false)), ((InputArgument)(false)), ((InputArgument)(false)), ((InputArgument)(false)));
 			if (Function.Call<int>(unchecked((Hash)(-1862873226061817159L))) >= Function.Call<int>(unchecked((Hash)(-1273479337795616556L))) - 1)
 			{
 				Function.Call(unchecked((Hash)(-3305433416267445730L)));
 				Script.Wait(100);
-				Function.Call(unchecked((Hash)(-3454974875737139118L)), InputArgument.op_Implicit(CurrentPlayingCutscene));
+				Function.Call(unchecked((Hash)(-3454974875737139118L)), ((InputArgument)(CurrentPlayingCutscene)));
 				PlayingCutscene = false;
 				EndCutscene();
 				Script.Wait(100);
@@ -2271,12 +2271,12 @@ public class Class1 : Script
 		if (!Function.Call<bool>(unchecked((Hash)(-3187737643600379106L))))
 		{
 			Function.Call(unchecked((Hash)(-3305433416267445730L)));
-			Function.Call(unchecked((Hash)(-3454974875737139118L)), InputArgument.op_Implicit(CurrentPlayingCutscene));
+			Function.Call(unchecked((Hash)(-3454974875737139118L)), ((InputArgument)(CurrentPlayingCutscene)));
 			PlayingCutscene = false;
 			EndCutscene();
-			Screen.FadeOut(1000);
+			GTA.UI.Screen.FadeOut(1000);
 			Script.Wait(1200);
-			Screen.FadeIn(1000);
+			GTA.UI.Screen.FadeIn(1000);
 		}
 	}
 
