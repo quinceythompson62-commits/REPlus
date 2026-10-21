@@ -845,17 +845,17 @@ public class Class1 : Script
 		//IL_0046: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0047: Unknown result type (might be due to invalid IL or missing references)
 		Model result = default(Model);
-		((Model)(ref result))._002Ector(Name);
-		((Model)(ref result)).Request(10000);
-		if (((Model)(ref result)).IsInCdImage && ((Model)(ref result)).IsValid)
+		result = new Model(Name);
+		result.Request(10000);
+		if (result.IsInCdImage && result.IsValid)
 		{
-			while (!((Model)(ref result)).IsLoaded)
+			while (!result.IsLoaded)
 			{
 				Script.Wait(50);
 			}
 			return result;
 		}
-		((Model)(ref result)).MarkAsNoLongerNeeded();
+		result.MarkAsNoLongerNeeded();
 		return result;
 	}
 
@@ -1112,15 +1112,15 @@ public class Class1 : Script
 		Script.Wait(1000);
 		if ((Entity)(object)NonCutscene2 != (Entity)null)
 		{
-			((Entity)NonCutscene2).Position = ((Vector3)(ref StartPos)).Around(2f);
+			((Entity)NonCutscene2).Position = StartPos.Around(2f);
 		}
 		if ((Entity)(object)NonCutscene3 != (Entity)null)
 		{
-			((Entity)NonCutscene3).Position = ((Vector3)(ref StartPos)).Around(2f);
+			((Entity)NonCutscene3).Position = StartPos.Around(2f);
 		}
 		if ((Entity)(object)NonCutscene4 != (Entity)null)
 		{
-			((Entity)NonCutscene4).Position = ((Vector3)(ref StartPos)).Around(2f);
+			((Entity)NonCutscene4).Position = StartPos.Around(2f);
 		}
 		if ((Entity)(object)NonCutscene2 != (Entity)null)
 		{
@@ -1162,17 +1162,17 @@ public class Class1 : Script
 		//IL_0046: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0047: Unknown result type (might be due to invalid IL or missing references)
 		Model result = default(Model);
-		((Model)(ref result))._002Ector(Name);
-		((Model)(ref result)).Request(250);
-		if (((Model)(ref result)).IsInCdImage && ((Model)(ref result)).IsValid)
+		result = new Model(Name);
+		result.Request(250);
+		if (result.IsInCdImage && result.IsValid)
 		{
-			while (!((Model)(ref result)).IsLoaded)
+			while (!result.IsLoaded)
 			{
 				Script.Wait(50);
 			}
 			return result;
 		}
-		((Model)(ref result)).MarkAsNoLongerNeeded();
+		result.MarkAsNoLongerNeeded();
 		return result;
 	}
 
@@ -1185,17 +1185,17 @@ public class Class1 : Script
 		//IL_0046: Unknown result type (might be due to invalid IL or missing references)
 		//IL_0047: Unknown result type (might be due to invalid IL or missing references)
 		Model result = default(Model);
-		((Model)(ref result))._002Ector(Name);
-		((Model)(ref result)).Request(250);
-		if (((Model)(ref result)).IsInCdImage && ((Model)(ref result)).IsValid)
+		result = new Model(Name);
+		result.Request(250);
+		if (result.IsInCdImage && result.IsValid)
 		{
-			while (!((Model)(ref result)).IsLoaded)
+			while (!result.IsLoaded)
 			{
 				Script.Wait(50);
 			}
 			return result;
 		}
-		((Model)(ref result)).MarkAsNoLongerNeeded();
+		result.MarkAsNoLongerNeeded();
 		return result;
 	}
 
