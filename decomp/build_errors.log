@@ -1,0 +1,51 @@
+  Determining projects to restore...
+  Restored D:\a\REPlus\REPlus\src\CutscenePlayer.csproj (in 123 ms).
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(848,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(849,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(850,16): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(850,53): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(852,21): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(858,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1115,49): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1119,49): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1123,49): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1165,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1166,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1167,16): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1167,53): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1169,21): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1175,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1188,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1189,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1190,16): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1190,53): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1192,21): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1198,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+
+Build FAILED.
+
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(848,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(849,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(850,16): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(850,53): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(852,21): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(858,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1115,49): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1119,49): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1123,49): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1165,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1166,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1167,16): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1167,53): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1169,21): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1175,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1188,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1189,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1190,16): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1190,53): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1192,21): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+D:\a\REPlus\REPlus\src\CutscenesMenu\Class1.cs(1198,12): error CS1525: Invalid expression term 'ref' [D:\a\REPlus\REPlus\src\CutscenePlayer.csproj]
+    0 Warning(s)
+    21 Error(s)
+
+Time Elapsed 00:00:06.04
