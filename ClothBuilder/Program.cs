@@ -53,6 +53,7 @@ namespace ClothBuilder
                     case "extract": if (args.Length < 3) break; Extract(args[1], args[2]); return 0;
                     case "convert": if (args.Length < 3) break; ConvertFolder(args[1], args[2]); return 0;
                     case "build": if (args.Length < 3) break; return Build(args[1], args[2]);
+                    case "overlay": if (args.Length < 3) break; return Overlay(args[1], args[2]);
                 }
             }
             catch (Exception ex)
@@ -233,6 +234,108 @@ namespace ClothBuilder
                 }
                 catch (Exception ex) { Console.WriteLine($"{rel}\tERROR {ex.Message}"); }
             }
+        }
+
+
+        // ---------------------------------------------------------------- overlay
+        // Builds a DLC whose RPFs override existing game files by name (like Rockstar's own
+        // mppatches): face textures, player_zero/one/two remasters, tattoo overlays.
+        // Spec (tab separated): dlc <name> | file <rpf name> <path inside rpf> <source file>
+        static int Overlay(string specPath, string outRoot)
+        {
+            string dlc = null;
+            var baseDir = Path.GetDirectoryName(Path.GetFullPath(specPath));
+            var files = new List<(string rpf, string inner, string src)>();
+            foreach (var raw in File.ReadAllLines(specPath))
+            {
+                var line = raw.TrimEnd('\r');
+                if (line.Trim().Length == 0 || line.TrimStart().StartsWith("#")) continue;
+                var c = line.Split('\t');
+                if (c[0] == "dlc") dlc = c[1].Trim().ToLowerInvariant();
+                else if (c[0] == "file") files.Add((c[1], c[2].Replace('/', '\\'), Path.IsPathRooted(c[3]) ? c[3] : Path.Combine(baseDir, c[3])));
+                else throw new Exception("unknown spec line: " + line);
+            }
+            if (dlc == null) throw new Exception("spec has no 'dlc' line");
+            var outDir = Path.Combine(Path.GetFullPath(outRoot), dlc);
+            Directory.CreateDirectory(outDir);
+            var dlcRpfPath = Path.Combine(outDir, "dlc.rpf");
+            if (File.Exists(dlcRpfPath)) File.Delete(dlcRpfPath);
+
+            var rpfNames = files.Select(f => f.rpf).Distinct().ToList();
+            var sb = new StringBuilder();
+            sb.AppendLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            sb.AppendLine("<CDataFileMgr__ContentsOfDataFileXml>");
+            sb.AppendLine("  <disabledFiles />");
+            sb.AppendLine("  <includedXmlFiles />");
+            sb.AppendLine("  <includedDataFiles />");
+            sb.AppendLine("  <dataFiles>");
+            foreach (var r in rpfNames)
+            {
+                sb.AppendLine("    <Item>");
+                sb.AppendLine($"      <filename>dlc_{dlc}:/%PLATFORM%/models/cdimages/{r}</filename>");
+                sb.AppendLine("      <fileType>RPF_FILE</fileType>");
+                sb.AppendLine("      <overlay value=\"true\" />");
+                sb.AppendLine("      <disabled value=\"true\" />");
+                sb.AppendLine("      <persistent value=\"true\" />");
+                sb.AppendLine("    </Item>");
+            }
+            sb.AppendLine("  </dataFiles>");
+            sb.AppendLine("  <contentChangeSets>");
+            sb.AppendLine("    <Item>");
+            sb.AppendLine($"      <changeSetName>{dlc.ToUpperInvariant()}_GEN</changeSetName>");
+            sb.AppendLine("      <mapChangeSetData />");
+            sb.AppendLine("      <filesToInvalidate />");
+            sb.AppendLine("      <filesToDisable />");
+            sb.AppendLine("      <filesToEnable>");
+            foreach (var r in rpfNames) sb.AppendLine($"        <Item>dlc_{dlc}:/%PLATFORM%/models/cdimages/{r}</Item>");
+            sb.AppendLine("      </filesToEnable>");
+            sb.AppendLine("      <txdToLoad />");
+            sb.AppendLine("      <txdToUnload />");
+            sb.AppendLine("      <residentResources />");
+            sb.AppendLine("      <unregisterResources />");
+            sb.AppendLine("      <requiresLoadingScreen value=\"false\" />");
+            sb.AppendLine("    </Item>");
+            sb.AppendLine("  </contentChangeSets>");
+            sb.AppendLine("  <patchFiles />");
+            sb.AppendLine("</CDataFileMgr__ContentsOfDataFileXml>");
+
+            var root = RpfFile.CreateNew(outDir, "dlc.rpf", RpfEncryption.OPEN);
+            RpfFile.CreateFile(root.Root, "content.xml", Encoding.UTF8.GetBytes(sb.ToString()));
+            RpfFile.CreateFile(root.Root, "setup2.xml", Encoding.UTF8.GetBytes(SetupXml(dlc)));
+            var x64 = RpfFile.CreateDirectory(root.Root, "x64");
+            var models = RpfFile.CreateDirectory(x64, "models");
+            var cd = RpfFile.CreateDirectory(models, "cdimages");
+            int n = 0;
+            foreach (var r in rpfNames)
+            {
+                var sub = RpfFile.CreateNew(cd, r);
+                var dirs = new Dictionary<string, RpfDirectoryEntry>(StringComparer.OrdinalIgnoreCase) { [""] = sub.Root };
+                foreach (var f in files.Where(x => x.rpf == r))
+                {
+                    var dir = Path.GetDirectoryName(f.inner) ?? "";
+                    if (!dirs.TryGetValue(dir, out var de))
+                    {
+                        de = sub.Root;
+                        var acc = "";
+                        foreach (var part in dir.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            acc = acc.Length == 0 ? part : acc + "\\" + part;
+                            if (!dirs.TryGetValue(acc, out var next)) { next = RpfFile.CreateDirectory(de, part); dirs[acc] = next; }
+                            de = next;
+                        }
+                    }
+                    try
+                    {
+                        var bytes = ToGen9(f.src, out var conv);
+                        RpfFile.CreateFile(de, Path.GetFileName(f.inner), bytes);
+                        Console.WriteLine($"{r}|{f.inner}\t{(conv ? "converted" : "as is")}");
+                        n++;
+                    }
+                    catch (Exception ex) { Console.WriteLine($"SKIP {f.inner}: {ex.Message}"); }
+                }
+            }
+            Console.WriteLine($"BUILT {dlcRpfPath}  files={n}");
+            return 0;
         }
 
         // ---------------------------------------------------------------- build
