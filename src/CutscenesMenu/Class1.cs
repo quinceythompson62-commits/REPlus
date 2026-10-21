@@ -1086,7 +1086,7 @@ public class Class1 : Script
 		{
 			SetBack((PedHash)PlayerModel.Hash);
 		}
-		if (PlayerModel == new Model(225514697)
+		if (PlayerModel == new Model(225514697))
 		{
 			SetBack((PedHash)PlayerModel.Hash);
 		}
